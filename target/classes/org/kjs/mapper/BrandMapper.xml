@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kjs.mapper.BrandMapper">
+	
+	<insert id="insert">
+		insert into tbl_brand(brand_name) values(#{name});
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey resultType="long" keyProperty="brandId"
+			order="BEFORE">
+			SELECT MAX(brand_id)+1 FROM tbl_brand
+		</selectKey>
+		insert into tbl_brand(brand_name)
+		values({#name})
+	</insert>
+	
+	<delete id="delete">
+		delete from tbl_brand where brand_id = #{brandId}
+	</delete>
+	
+	<update id="update">
+		update tbl_brand set brand_name=#{name}
+	</update>
+	
+	<select id="get" resultType="org.kjs.domain.BrandVO">
+		<![CDATA[select * from tbl_brand where brand_id=#{id}]]>
+	</select>
+	
+	<select id="getList" resultType="org.kjs.domain.BrandVO">
+		<![CDATA[select * from tbl_brand where brand_id > 0]]>
+	</select>
+	
+	<select id="getListWithPaging" resultType="org.kjs.domain.BrandVO">
+		<![CDATA[	select * from tbl_brand where]]>
+		<![CDATA[ 	brand_id > 0  order by brand_id 
+					desc limit #{startIndex},#{amount}]]>
+	</select>
+
+	<select id="getTotalCount" resultType="int">
+		select count(*) from
+		tbl_brand where
+		brand_id > 0;
+	</select>
+
+</mapper>
