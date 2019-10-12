@@ -5,7 +5,7 @@
 <mapper namespace="org.kjs.mapper.BrandMapper">
 	
 	<insert id="insert">
-		insert into tbl_brand(brand_name) values(#{name});
+		insert into tbl_brand(brand_name) values(#{brandName})
 	</insert>
 	
 	<insert id="insertSelectKey">
@@ -13,8 +13,8 @@
 			order="BEFORE">
 			SELECT MAX(brand_id)+1 FROM tbl_brand
 		</selectKey>
-		insert into tbl_brand(brand_name)
-		values({#name})
+		insert into tbl_brand(brand_name) 
+		values(#{brandName})
 	</insert>
 	
 	<delete id="delete">
@@ -22,7 +22,7 @@
 	</delete>
 	
 	<update id="update">
-		update tbl_brand set brand_name=#{name}
+		update tbl_brand set brand_name=#{brandName}
 	</update>
 	
 	<select id="get" resultType="org.kjs.domain.BrandVO">
@@ -33,7 +33,7 @@
 		<![CDATA[select * from tbl_brand where brand_id > 0]]>
 	</select>
 	
-	<select id="getListWithPaging" resultType="org.kjs.domain.BrandVO">
+	<select id="getListWithPage" resultType="org.kjs.domain.BrandVO">
 		<![CDATA[	select * from tbl_brand where]]>
 		<![CDATA[ 	brand_id > 0  order by brand_id 
 					desc limit #{startIndex},#{amount}]]>
