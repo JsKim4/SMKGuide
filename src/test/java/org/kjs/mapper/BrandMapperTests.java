@@ -2,7 +2,7 @@ package org.kjs.mapper;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kjs.domain.BrandVO;
+import org.kjs.domain.ComponentVO;
 import org.kjs.domain.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,50 +17,66 @@ import lombok.extern.log4j.Log4j;
 public class BrandMapperTests {
 	@Setter(onMethod_ = @Autowired)
 	private BrandMapper mapper;
+	@Setter(onMethod_ = @Autowired)
+	private ComponentMapper cmapper;
 	
 	@Test
 	public void testGetTotalCount() {
 		Criteria cri = new Criteria(2,10);
-		log.info(mapper.getTotalCount(cri));
+		ComponentVO vo = new ComponentVO();
+		vo.setType("country");
+		log.info(cmapper.getTotalCount(vo,cri));
 		
 	}
 	
 	@Test
 	public void testGetListWithPage(){
-		Criteria cri = new Criteria(2,10);
-		mapper.getListWithPage(cri).forEach(brand->log.info(brand));
+		Criteria cri = new Criteria(1,10);
+		ComponentVO vo = new ComponentVO();
+		vo.setType("country");
+		cmapper.getListWithPage(vo,cri).forEach(brand->log.info(brand));
 	}
 	
 	
 	@Test
 	public void testGet() {
-		log.info(mapper.get(18L));
+		ComponentVO vo = new ComponentVO();
+		vo.setId(6L);
+		vo.setType("brand");
+		log.info(cmapper.get(vo));
 	}
 	
 	
 	@Test 
 	public void testDelete() {
-		log.info("result : "+mapper.delete(15L));
+		ComponentVO vo = new ComponentVO();
+		vo.setType("brand");
+		vo.setId(5L);
+		log.info("result : "+cmapper.delete(vo));
 	}
 	
 	
 	@Test
 	public void testInsertSelectKey(){
-		BrandVO vo = new BrandVO();
-		vo.setBrandName("test Name");
-		mapper.insertSelectKey(vo);
+		ComponentVO vo = new ComponentVO();
+		vo.setName("New Component");
+		vo.setType("country");
+		cmapper.insertSelectKey(vo);
 		log.info(vo);
 	}
 	
 	@Test 
 	public void testInsert() {
-		BrandVO vo = new BrandVO();
-		vo.setBrandName("test Name");
-		mapper.insert(vo);
+		ComponentVO vo = new ComponentVO();
+		vo.setName("New Component");
+		vo.setType("country");
+		cmapper.insert(vo);
 		
 	}
 	@Test 
 	public void testGetList() {
-		mapper.getList().forEach(brand->log.info("brandLog"+brand));
+		ComponentVO vo = new ComponentVO();
+		vo.setType("brand");
+		cmapper.getList(vo).forEach(component->log.info("componentLog"+component));
 	}
 }

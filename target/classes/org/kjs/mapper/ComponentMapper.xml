@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kjs.mapper.ComponentMapper">
+	
+	<insert id="insert">
+		insert into tbl_${vo.type}(${vo.type}_name) values(#{vo.name})
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey resultType="long" keyProperty="brandId"
+			order="BEFORE">
+			SELECT MAX(${vo.type}_id)+1 FROM tbl_${vo.type}
+		</selectKey>
+		insert into tbl_${vo.type}(${vo.type}_name) 
+		values(#{vo.name})
+	</insert>
+	
+	<delete id="delete">
+		delete from tbl_${vo.type} where ${vo.type}_id = #{vo.id}
+	</delete>
+	
+	<update id="update">
+		update tbl_${vo.type} set ${vo.type}_name=#{vo.name} where ${vo.type}_id = ${vo.id}
+	</update>
+	
+	<select id="get" resultType="org.kjs.domain.ComponentVO">
+		select ${vo.type}_id as id, ${vo.type}_name as name from tbl_${vo.type} where ${vo.type}_id=#{vo.id}
+	</select>
+	
+	<select id="getList" resultType="org.kjs.domain.ComponentVO">
+		select ${vo.type}_id as id, ${vo.type}_name as name from tbl_${vo.type} where ${vo.type}_id<![CDATA[ > 0]]>
+	</select>
+	
+	<select id="getListWithPage" resultType="org.kjs.domain.ComponentVO">
+			select ${vo.type}_id as id, ${vo.type}_name as name from tbl_${vo.type} where
+			${vo.type}_id<![CDATA[ > 0 ]]> order by ${vo.type}_id 
+					desc limit #{cri.startIndex},#{cri.amount}
+	</select>
+
+	<select id="getTotalCount" resultType="int">
+		select count(*) from
+		tbl_${vo.type} where
+		${vo.type}_id > 0;
+	</select>
+
+</mapper>
