@@ -69,21 +69,14 @@ public class MemberServiceTests {
 	}
 
 	@Test
-	public void testGetList() {
-		service.getList().forEach(vo -> log.info(vo));
-	}
-	
-	@Test
 	public void testGetListWithPage() {
 		Criteria cri = new Criteria(1,10);
-		cri.setStartIndex();
-		service.getListWithPage(cri).forEach(vo -> log.info(vo));
+		service.getList(cri).forEach(vo -> log.info(vo));
 	}
 	
 	@Test
 	public void testGetTotalCount() {
 		Criteria cri = new Criteria(1,10);
-		cri.setStartIndex();
-		log.info(mapper.getTotalCount(cri));
+		log.info(service.getTotalCount(cri));
 	}
 }

@@ -16,9 +16,7 @@ public interface MemberService {
 
 	public int leave(MemberVO vo);
 
-	public List<MemberVO> getList();
+	public List<MemberVO> getList(Criteria cri);
 
-	public List<MemberVO> getListWithPage(Criteria cri);
-	
 	public int getTotalCount(Criteria cri);
 }

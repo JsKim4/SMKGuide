@@ -14,7 +14,7 @@
 							l.tobacco_id = #{tId}
 						</when>
 						<!-- Member = M -->
-						<when test="type == 'M'.toString() ans mId!+null and mId > 0">
+						<when test="type == 'M'.toString() and mId!=null and mId > 0">
 							l.member_id = #{mId}
 						</when>
 					</choose>
