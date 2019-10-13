@@ -18,7 +18,11 @@ public class Criteria {			//담배 검색용 객체
 	public Criteria() {
 		this(1, 10);
 	}
-
+	
+	public void setStartIndex() {
+		this.startIndex = (this.getPageNum()-1)*this.getAmount();
+	}
+	
 	public Criteria(int pageNum, int amount) {
 		this.pageNum = pageNum;
 		this.amount = amount;

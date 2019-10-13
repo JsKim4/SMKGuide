@@ -14,9 +14,7 @@ import lombok.extern.log4j.Log4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class BrandMapperTests {
-	@Setter(onMethod_ = @Autowired)
-	private BrandMapper mapper;
+public class ComponentMapperTests {
 	@Setter(onMethod_ = @Autowired)
 	private ComponentMapper cmapper;
 	
@@ -59,7 +57,7 @@ public class BrandMapperTests {
 	@Test
 	public void testInsertSelectKey(){
 		ComponentVO vo = new ComponentVO();
-		vo.setName("New Component");
+		vo.setName("county99");
 		vo.setType("country");
 		cmapper.insertSelectKey(vo);
 		log.info(vo);
@@ -68,8 +66,8 @@ public class BrandMapperTests {
 	@Test 
 	public void testInsert() {
 		ComponentVO vo = new ComponentVO();
-		vo.setName("New Component");
-		vo.setType("country");
+		vo.setName("type");
+		vo.setType("type");
 		cmapper.insert(vo);
 		
 	}
