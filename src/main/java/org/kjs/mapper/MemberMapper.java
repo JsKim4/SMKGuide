@@ -15,6 +15,9 @@ public interface MemberMapper {
 	// 로그인 --> *이메일 + 비밀번호*
 	public MemberVO get(MemberVO vo);
 	
+	//email to id
+	public Integer getIdByEmail(String email);
+	
 	// 회원 탈퇴 *이메일 + 비밀번호*
 	public int delete(MemberVO vo);
 

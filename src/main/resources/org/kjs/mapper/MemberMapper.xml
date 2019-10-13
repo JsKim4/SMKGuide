@@ -22,6 +22,9 @@
 		select * from tbl_member where
 		(email,password)=(#{email},sha2(#{password},256))
 	</select>
+	<select id="getIdByEmail" resultType="int">
+		select member_id from tbl_member where email=#{email}
+	</select>
 	<delete id="delete">
 		delete from tbl_member where
 		(email,password,member_id) = (#{email},#{password},#{memberId})

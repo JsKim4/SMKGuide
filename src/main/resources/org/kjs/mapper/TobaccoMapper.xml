@@ -4,20 +4,24 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kjs.mapper.TobaccoMapper">
 	<sql id="criteria">
-		<trim prefix="(" suffix=")and" prefixOverrides="and">
+		<trim prefix="(" suffix=") and " prefixOverrides="and">
 			<foreach item='type' collection="typeArr">
 				<trim prefix="and">
 					<choose>
 						<!-- 타입조건이 해당 되면 sql문 추가 -->
+						<!-- Brnad = B -->
 						<when test="type == 'B'.toString()">
 							t.brand_id = #{bId}
 						</when>
+						<!-- Type = T -->
 						<when test="type == 'T'.toString()">
 							t.type_id = #{tId}
 						</when>
-						<when test="type == 'N'.toString()">
+						<!-- Country = N -->
+						<when test="type == 'n'.toString()">
 							t.country_id = #{nId}
 						</when>
+						<!-- Company = M -->
 						<when test="type == 'M'.toString()">
 							t.company_id = #{mId}
 						</when>

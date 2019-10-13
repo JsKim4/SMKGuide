@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentPageDTO {
-	private int commentCount;			//comment 개수
-	private List<CommentVO> list;		// Tobacco 1개당 list개수
+public class SmokelogPageDTO {
+	private int smokelogCount;			//smoke log 개수
+	private List<SmokelogVO> list;		// Tobacco 1개당 or user 한명당 list
 }

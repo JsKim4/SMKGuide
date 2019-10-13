@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kjs.mapper.SmokelogMapper">
+	<sql id="criteria">
+		<trim prefix="(" suffix=") and " prefixOverrides="and">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="and">
+					<choose>
+						<!-- 타입조건이 해당 되면 sql문 추가 -->
+						<!-- Tobacco = T -->
+						<when test="type == 'T'.toString() and tId!=null and tId > 0">
+							l.tobacco_id = #{tId}
+						</when>
+						<!-- Member = M -->
+						<when test="type == 'M'.toString() ans mId!+null and mId > 0">
+							l.member_id = #{mId}
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	<resultMap id="Smoke" type="org.kjs.domain.SmokelogVO">
+		<id property="smokelogId" column="smokelog_id" />
+	   	<id property="memberId" column="member_id" />
+	   	<id property="cdate" column="cdate" />
+	   	<association property="tobacco"  javaType="org.kjs.domain.TobaccoVO" >
+	    	<result property="tobaccoId"  column="tobacco_id" />
+			<result property="tobaccoName"  column="tobacco_name" />
+		</association>
+	</resultMap>
+	<insert id="insert">
+		insert into
+		tbl_smokelog(tobacco_id,member_id)
+		values(#{tobacco.tobaccoId},#{memberId})
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey resultType="long" keyProperty="smokelogId"
+			order="BEFORE">
+			SELECT MAX(smokelog_id)+1 FROM tbl_smokelog
+		</selectKey>
+		insert into
+		tbl_smokelog(tobacco_id,member_id)
+		values(#{tobacco.tobaccoId},#{memberId})
+	</insert>
+	
+	<update id="update">
+		update tbl_smokelog set tobacco_id = #{tobacco.tobaccoId},
+		cdate = #{cdate} where smokelog_id = #{smokelogId}
+	</update>
+	
+	<select id="get" resultMap="Smoke">
+		select 
+		l.smokelog_id,
+		l.tobacco_id,
+		s.tobacco_name,
+		l.member_id,
+		l.cdate
+		from tbl_smokelog as l
+		left join tbl_tobacco as s on (l.tobacco_id = s.tobacco_id)
+		where smokelog_id = #{smokelogId}
+	</select>
+	
+	<delete id="delete">
+		delete from tbl_smokelog where
+		smokelog_id = #{smokelogId}
+	</delete>
+	
+	<select id="getList" resultMap="Smoke">
+		select 
+		l.smokelog_id,
+		l.tobacco_id,
+		s.tobacco_name,
+		l.member_id,
+		l.cdate
+		from tbl_smokelog as l
+		left join tbl_tobacco as s on (l.tobacco_id = s.tobacco_id)
+	</select>
+	
+	<select id="getListWithPage" resultMap="Smoke">
+		select 
+		l.smokelog_id,
+		l.tobacco_id,
+		s.tobacco_name,
+		l.member_id,
+		l.cdate
+		from tbl_smokelog as l
+		left join tbl_tobacco as s on (l.tobacco_id = s.tobacco_id)
+		where <include refid="criteria"></include> 
+		l.smokelog_id>0 
+		order by l.smokelog_id desc limit #{startIndex},#{amount}
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_smokelog as l where 
+		 <include refid="criteria"></include> 
+		l.smokelog_id>0 
+	</select>
+</mapper>

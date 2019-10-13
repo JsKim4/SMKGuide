@@ -19,6 +19,12 @@ public class MemberMapperTests {
 	private MemberMapper mapper;
 
 	@Test
+	public void testGetIdByEmail() {
+		log.info(mapper.getIdByEmail("email"));
+	}
+	
+	
+	@Test
 	public void testInsert() {
 		MemberVO vo = new MemberVO();
 		vo.setEmail("insertTest@test");
