@@ -19,28 +19,36 @@ import lombok.extern.log4j.Log4j;
 public class CommentMapperTests {
 	@Setter(onMethod_ = @Autowired)
 	private CommentMapper mapper;
-	
-	
+
+	@Test
+	public void testGetTotalCount() {
+		Criteria cri = new Criteria(1, 10);
+		cri.setType("TM");
+		cri.setTId(4L);
+		cri.setMId(1L);
+		log.info(mapper.getTotalCount(cri));
+	}
+
 	@Test
 	public void testGetListWithPage() {
-		Criteria cri = new Criteria(1,10);
+		Criteria cri = new Criteria(1, 10);
 		cri.setType("TM");
 		cri.setTId(2L);
-		cri.setMId(3L);
-		log.info(cri.getTypeArr()[0]+"  "+cri.getTypeArr()[1]);
+		cri.setMId(1L);
+		log.info(cri.getTypeArr()[0] + "  " + cri.getTypeArr()[1]);
 		mapper.getListWithPage(cri).forEach(vo -> log.info(vo));
 	}
-	
+
 	@Test
 	public void testGetList() {
 		mapper.getList().forEach(vo -> log.info(vo));
 	}
-	
+
 	@Test
 	public void testDelete() {
-		log.info(mapper.delete(54L)>0?"success":"fail");
+		log.info(mapper.delete(54L) > 0 ? "success" : "fail");
 	}
-	
+
 	@Test
 	public void testUpdate() {
 		CommentVO vo = mapper.get(55L);
