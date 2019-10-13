@@ -23,7 +23,8 @@ public interface MemberMapper {
 	 * 
 	 * 관리자 페이지 용
 	 * 
-	 **/
+	 *
+	 */
 
 	// 전체리스트
 	public List<MemberVO> getList();

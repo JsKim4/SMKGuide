@@ -18,11 +18,23 @@ import lombok.extern.log4j.Log4j;
 public class TobaccoMapperTests {
 	@Setter(onMethod_ = @Autowired)
 	private TobaccoMapper tmapper;
-
+	
 	@Test
-	public void testGetListWithPage() {
+	public void getTotalCount() {
 		Criteria cri = new Criteria(2, 10);
 		cri.setStartIndex();
+		cri.setType("B");
+		cri.setBId(17L);
+		tmapper.getTotalCount(cri);
+	}
+	
+	
+	@Test
+	public void testGetListWithPage() {
+		Criteria cri = new Criteria(1, 10);
+		cri.setStartIndex();
+		cri.setType("B");
+		cri.setBId(10L);
 		tmapper.getListWithPage(cri).forEach(vo -> log.info(vo));
 	}
 

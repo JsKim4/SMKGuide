@@ -14,6 +14,10 @@ public class Criteria {			//담배 검색용 객체
 
 	private String type;		//검색 타입
 	private String keyword;		//검색 키워드
+	private Long bId;
+	private Long nId;
+	private Long mId;
+	private Long tId;
 	
 	public Criteria() {
 		this(1, 10);

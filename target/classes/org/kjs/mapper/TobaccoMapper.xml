@@ -3,7 +3,30 @@
 	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kjs.mapper.TobaccoMapper">
-
+	<sql id="criteria">
+		<trim prefix="(" suffix=")and" prefixOverrides="and">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="and">
+					<choose>
+						<!-- 타입조건이 해당 되면 sql문 추가 -->
+						<when test="type == 'B'.toString()">
+							t.brand_id = #{bId}
+						</when>
+						<when test="type == 'T'.toString()">
+							t.type_id = #{tId}
+						</when>
+						<when test="type == 'N'.toString()">
+							t.country_id = #{nId}
+						</when>
+						<when test="type == 'M'.toString()">
+							t.company_id = #{mId}
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
 	<resultMap id="Tobacco" type="org.kjs.domain.TobaccoVO">
 		<id property="tobaccoId" column="tobacco_id" />
 	   	<id property="tobaccoName" column="tobacco_name" />
@@ -129,12 +152,12 @@
 		cm.company_id)
 		left join tbl_brand as b on (t.brand_id = b.brand_id)
 		left join tbl_type as tp on (t.type_id = tp.type_id)
-		
+		where <include refid="criteria"></include> tobacco_id>0
 		order by tobacco_id desc limit #{startIndex},#{amount}
 	</select>
 	
 	<select id="getTotalCount" resultType="int">
-		select count(*) from tobacco
+		select count(*) from tbl_tobacco as t where <include refid="criteria"></include> tobacco_id>0
 	</select>
 	
 
