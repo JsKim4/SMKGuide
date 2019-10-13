@@ -3,11 +3,11 @@
 #개발 계획 및 순서
 
 
-# step 1. database 설계 및 구축
+# step 1. database 설계 및 구축 F
 
-# step 2. domain 생성
+# step 2. domain 생성 F
 
-# step 3. mapper.xml mapper.class //interface 생성 및 테스트
+# step 3. mapper.xml mapper.class //interface 생성 및 테스트 F
 
 # step 4. service 구축 및 테스트
 
