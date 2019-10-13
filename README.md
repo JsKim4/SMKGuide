@@ -7,7 +7,7 @@
 
 # step 2. domain 생성 F
 
-# step 3. mapper.xml mapper.class //interface 생성 및 테스트 F
+# step 3. mapper.xml 생성 및 테스트 F
 
 # step 4. service 구축 및 테스트
 
