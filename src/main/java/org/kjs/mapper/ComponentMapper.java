@@ -9,7 +9,7 @@ import org.kjs.domain.Criteria;
 public interface ComponentMapper {
 	public int insert(@Param("vo") ComponentVO vo);
 
-	public void insertSelectKey(@Param("vo") ComponentVO vo);
+	public int insertSelectKey(@Param("vo") ComponentVO vo);
 
 	public int delete(@Param("vo") ComponentVO vo);
 

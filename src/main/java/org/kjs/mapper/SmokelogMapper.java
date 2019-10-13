@@ -10,7 +10,7 @@ public interface SmokelogMapper {
 		public int insert(SmokelogVO vo);
 
 		// insert 후 log 번호 가져옴
-		public void insertSelectKey(SmokelogVO vo);
+		public int insertSelectKey(SmokelogVO vo);
 
 		// 삭제
 		public int delete(Long smokelogId);

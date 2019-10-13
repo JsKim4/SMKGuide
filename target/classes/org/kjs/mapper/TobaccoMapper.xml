@@ -10,7 +10,7 @@
 					<choose>
 						<!-- 타입조건이 해당 되면 sql문 추가 -->
 						<!-- Brnad = B -->
-						<when test="type == 'B'.toString() and bId!=null and b Id > 0">
+						<when test="type == 'B'.toString() and bId!=null and bId > 0">
 							t.brand_id = #{bId}
 						</when>
 						<!-- Type = T -->
@@ -18,7 +18,7 @@
 							t.type_id = #{tId}
 						</when>
 						<!-- Country = N -->
-						<when test="type == 'n'.toString() and nId!=null and nId > 0">
+						<when test="type == 'N'.toString() and nId!=null and nId > 0">
 							t.country_id = #{nId}
 						</when>
 						<!-- Company = M -->

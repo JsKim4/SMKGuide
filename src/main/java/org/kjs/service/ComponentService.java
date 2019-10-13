@@ -6,7 +6,7 @@ import org.kjs.domain.ComponentVO;
 import org.kjs.domain.Criteria;
 
 public interface ComponentService {
-	public void register(ComponentVO vo);
+	public int register(ComponentVO vo);
 
 	public boolean modify(ComponentVO vo);
 

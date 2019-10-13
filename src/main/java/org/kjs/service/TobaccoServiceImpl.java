@@ -2,9 +2,9 @@ package org.kjs.service;
 
 import java.util.List;
 
-import org.kjs.domain.ComponentVO;
 import org.kjs.domain.Criteria;
-import org.kjs.mapper.ComponentMapper;
+import org.kjs.domain.TobaccoVO;
+import org.kjs.mapper.TobaccoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,49 +13,46 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class ComponentServiceImpl implements ComponentService {
+public class TobaccoServiceImpl implements TobaccoService {
 
 	@Setter(onMethod_ = @Autowired)
-	ComponentMapper mapper;
+	TobaccoMapper mapper;
 
 	@Override
-	public int register(ComponentVO vo) {
+	public int register(TobaccoVO vo) {
 		// TODO Auto-generated method stub
 		return mapper.insertSelectKey(vo);
 
 	}
 
 	@Override
-	public boolean modify(ComponentVO vo) {
+	public boolean modify(TobaccoVO vo) {
 		// TODO Auto-generated method stub
 		return mapper.update(vo) == 1 ? true : false;
 	}
 
 	@Override
-	public boolean remove(ComponentVO vo) {
+	public boolean remove(Long tobaccoId) {
 		// TODO Auto-generated method stub
-		return mapper.delete(vo) == 1 ? true : false;
+		return mapper.delete(tobaccoId) == 1 ? true : false;
 	}
 
 	@Override
-	public ComponentVO get(ComponentVO vo) {
+	public TobaccoVO get(Long tobaccoId) {
 		// TODO Auto-generated method stub
-		String type = vo.getType();
-		vo = mapper.get(vo);
-		vo.setType(type);
-		return vo;
+		return mapper.get(tobaccoId);
 	}
 
 	@Override
-	public List<ComponentVO> getList(ComponentVO vo, Criteria cri) {
+	public List<TobaccoVO> getList(Criteria cri) {
 		// TODO Auto-generated method stub
-		return mapper.getListWithPage(vo, cri);
+		return mapper.getListWithPage(cri);
 	}
 
 	@Override
-	public int getTotalCount(ComponentVO vo) {
+	public int getTotalCount(Criteria cri) {
 		// TODO Auto-generated method stub
-		return mapper.getTotalCount(vo);
+		return mapper.getTotalCount(cri);
 	}
 
 }

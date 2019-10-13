@@ -10,7 +10,7 @@ public interface CommentMapper {
 	public int insert(CommentVO vo);
 
 	// insert 후 log 번호 가져옴
-	public void insertSelectKey(CommentVO vo);
+	public int insertSelectKey(CommentVO vo);
 
 	// 삭제
 	public int delete(Long commentId);

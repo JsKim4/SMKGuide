@@ -58,8 +58,7 @@ public class ComponentMapperTests {
 		ComponentVO vo = new ComponentVO();
 		vo.setName("county99");
 		vo.setType("country");
-		cmapper.insertSelectKey(vo);
-		log.info(vo);
+		log.info(cmapper.insertSelectKey(vo));
 	}
 	
 	@Test 

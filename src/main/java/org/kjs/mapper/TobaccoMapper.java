@@ -10,7 +10,7 @@ public interface TobaccoMapper {
 	public int insert(TobaccoVO vo);
 
 	// insert 후 Tobacco 번호 가져옴
-	public void insertSelectKey(TobaccoVO vo);
+	public int insertSelectKey(TobaccoVO vo);
 
 	// 영구삭제
 	public int delete(Long tobaccoId);
