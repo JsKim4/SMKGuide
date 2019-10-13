@@ -4,7 +4,10 @@
 
 
 # step 1. database 설계 및 구축 F
-
+<div>
+ <img src="https://user-images.githubusercontent.com/46150254/66719605-27ca0200-ee2d-11e9-8dec-78e55df9e455.png">
+</div>
+ 
 # step 2. domain 생성 F
 
 # step 3. mapper.xml 생성 및 테스트 F
