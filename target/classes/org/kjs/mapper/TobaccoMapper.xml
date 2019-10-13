@@ -10,19 +10,19 @@
 					<choose>
 						<!-- 타입조건이 해당 되면 sql문 추가 -->
 						<!-- Brnad = B -->
-						<when test="type == 'B'.toString()">
+						<when test="type == 'B'.toString() and bId!=null and b Id > 0">
 							t.brand_id = #{bId}
 						</when>
 						<!-- Type = T -->
-						<when test="type == 'T'.toString()">
+						<when test="type == 'T'.toString() and tId!=null and tId > 0">
 							t.type_id = #{tId}
 						</when>
 						<!-- Country = N -->
-						<when test="type == 'n'.toString()">
+						<when test="type == 'n'.toString() and nId!=null and nId > 0">
 							t.country_id = #{nId}
 						</when>
 						<!-- Company = M -->
-						<when test="type == 'M'.toString()">
+						<when test="type == 'M'.toString() and mId!=null and mId > 0">
 							t.company_id = #{mId}
 						</when>
 					</choose>

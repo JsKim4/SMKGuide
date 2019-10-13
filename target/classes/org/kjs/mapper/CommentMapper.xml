@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kjs.mapper.CommentMapper">
+	<sql id="criteria">
+		<trim prefix="(" suffix=") and " prefixOverrides="and">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="and">
+					<choose>
+						<!-- 타입조건이 해당 되면 sql문 추가 -->
+						<!-- Tobacco = T -->
+						<when test="type == 'T'.toString() and tId!=null and tId > 0">
+							c.tobacco_id = #{tId}
+						</when>
+						<!-- Member = M -->
+						<when test="type == 'M'.toString() and mId!=null and mId > 0">
+							c.member_id = #{mId}
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	<resultMap id="Comment" type="org.kjs.domain.CommentVO">
+		<id property="commentId" column="comment_id" />
+	   	<id property="content" column="content" />
+	   	<id property="cdate" column="cdate" />
+	   	<association property="tobacco"  javaType="org.kjs.domain.TobaccoVO" >
+	    	<result property="tobaccoId"  column="tobacco_id" />
+			<result property="tobaccoName"  column="tobacco_name" />
+		</association>
+		<association property="member"  javaType="org.kjs.domain.MemberVO" >
+	    	<result property="memberId"  column="member_id" />
+			<result property="memberName"  column="member_name" />
+		</association>
+	</resultMap>
+	<insert id="insert">
+		insert into
+		tbl_comment(tobacco_id,member_id,content)
+		values(#{tobacco.tobaccoId},#{member.memberId},#{content})
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey resultType="long" keyProperty="commentId"
+			order="BEFORE">
+			SELECT MAX(comment_id)+1 FROM tbl_comment
+		</selectKey>
+		insert into
+		tbl_comment(tobacco_id,member_id,content)
+		values(#{tobacco.tobaccoId},#{member.memberId},#{content})
+	</insert>
+	
+	<update id="update">
+		update tbl_comment set content=#{content} 
+		where comment_id = #{commentId}
+	</update>
+	
+	<select id="get" resultMap="Comment">
+		select 
+		c.comment_id,
+		c.tobacco_id,
+		t.tobacco_name,
+		c.member_id,
+		m.member_name,
+		c.content,
+		c.cdate
+		from tbl_comment as c
+		left join tbl_tobacco as t on (c.tobacco_id = t.tobacco_id)
+		left join tbl_member as m on (c.member_id = m.member_id)
+		where comment_id = #{commentId}
+	</select>
+	
+	<delete id="delete">
+		delete from tbl_comment where
+		comment_id = #{commentId}
+	</delete>
+	
+	<select id="getList" resultMap="Comment">
+		select 
+		c.comment_id,
+		c.tobacco_id,
+		t.tobacco_name,
+		c.member_id,
+		m.member_name,
+		c.content,
+		c.cdate
+		from tbl_comment as c
+		left join tbl_tobacco as t on (c.tobacco_id = t.tobacco_id)
+		left join tbl_member as m on (c.member_id = m.member_id)
+	</select>
+	
+	<select id="getListWithPage" resultMap="Comment">
+		select 
+		c.comment_id,
+		c.tobacco_id,
+		t.tobacco_name,
+		c.member_id,
+		m.member_name,
+		c.content,
+		c.cdate
+		from tbl_comment as c
+		left join tbl_tobacco as t on (c.tobacco_id = t.tobacco_id)
+		left join tbl_member as m on (c.member_id = m.member_id)
+		where <include refid="criteria"></include> 
+		c.comment_id>0 
+		order by c.comment_id desc limit #{startIndex},#{amount}
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_comment as c where 
+		 <include refid="criteria"></include> 
+		c.smokelog_id > 0 
+	</select>
+</mapper>
