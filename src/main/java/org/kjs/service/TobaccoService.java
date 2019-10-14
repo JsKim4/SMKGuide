@@ -17,4 +17,5 @@ public interface TobaccoService {
 	public List<TobaccoVO> getList(Criteria cri);
 	
 	public int getTotalCount(Criteria cri);
+	
 }

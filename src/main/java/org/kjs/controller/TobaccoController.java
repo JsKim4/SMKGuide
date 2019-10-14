@@ -1,8 +1,10 @@
 package org.kjs.controller;
 
+import org.kjs.domain.ComponentVO;
 import org.kjs.domain.Criteria;
 import org.kjs.domain.PageDTO;
 import org.kjs.domain.TobaccoVO;
+import org.kjs.service.ComponentService;
 import org.kjs.service.TobaccoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,68 +22,67 @@ import lombok.AllArgsConstructor;
 @Controller
 public class TobaccoController {
 	TobaccoService service;
+	ComponentService CS;
+
+	public void RM(Model model) {
+		model.addAttribute("brandList", CS.getRegistList(new ComponentVO("brand")));
+		model.addAttribute("companyList", CS.getRegistList(new ComponentVO("company")));
+		model.addAttribute("countryList", CS.getRegistList(new ComponentVO("country")));
+		model.addAttribute("typeList", CS.getRegistList(new ComponentVO("type")));
+	}
 	
 	@GetMapping("/list")
 	public void list(Model model, Criteria cri) {
 		cri.setStartIndex();
 		int total = service.getTotalCount(cri);
-		model.addAttribute("list",service.getList(cri));
-		model.addAttribute("pageMaker",new PageDTO(cri,total));
+		RM(model);
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
-	
+
 	@PostMapping("/register")
 	public String register(TobaccoVO vo, RedirectAttributes rttr) {
-		service.register(vo);
-		rttr.addFlashAttribute("result",vo.getTobaccoId());
+		vo.setTobaccoName(vo.getTobaccoName().trim());
+		try {
+			if(vo.getTobaccoName().length()>0){
+				service.register(vo);
+				rttr.addFlashAttribute("result",vo.getTobaccoId());
+				return "redirect:/tobacco/list";	
+			}
+		}catch(Exception e) {}
+		rttr.addFlashAttribute("result",-1);
 		return "redirect:/tobacco/list";	
 	}
-	
+
+	@GetMapping("/register")
+	public void register(Model model) {
+		RM(model);
+	}
+
 	@GetMapping({ "/get", "/modify" })
-	public void get(@RequestParam("tobaccoId") Long tobaccoId,
-			@ModelAttribute("cri") Criteria cri,
-			Model model) {
+	public void get(@RequestParam("tobaccoId") Long tobaccoId, @ModelAttribute("cri") Criteria cri, Model model) {
 		try {
 			model.addAttribute("tobacco", service.get(tobaccoId));
 		} catch (Exception e) {
-			model.addAttribute("result","fail");
+			model.addAttribute("result", "fail");
 		}
 	}
-	
+
 	@PostMapping("/modify")
-	public String modify(TobaccoVO vo,@ModelAttribute("cri")Criteria cri,RedirectAttributes rttr) {
-		if(service.modify(vo)) {
-			rttr.addAttribute("result","success");
+	public String modify(TobaccoVO vo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+		if (service.modify(vo)) {
+			rttr.addAttribute("result", "success");
 		}
-		return "redirec:/tobacco/list"+cri.getListLinkTobacco();
-	}
-	
-	@PostMapping("/remove")
-	public String remove(@RequestParam("tobaccoId")Long tobaccoId,@ModelAttribute("cri")Criteria cri,RedirectAttributes rttr) {
-		if(service.remove(tobaccoId)) {
-			rttr.addAttribute("result","success");
-		}
-		return "redirec:/tobacco/list"+cri.getListLinkTobacco();
-	}
-	
-	
-	/*
-	 * 	@PostMapping("/modify")
-	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri,RedirectAttributes rttr) {
-		log.info("modify : " + board);
-		if (boardService.modify(board)) {
-			rttr.addFlashAttribute("result", "success");
-		}
-		return "redirect:/board/list"+cri.getListLink();
+		return "redirec:/tobacco/list" + cri.getListLinkTobacco();
 	}
 
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno,@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
-		log.info("remove....." + bno);
-		if (boardService.remove(bno)) {
-			rttr.addFlashAttribute("result", "success");
+	public String remove(@RequestParam("tobaccoId") Long tobaccoId, @ModelAttribute("cri") Criteria cri,
+			RedirectAttributes rttr) {
+		if (service.remove(tobaccoId)) {
+			rttr.addAttribute("result", "success");
 		}
-
-		return "redirect:/board/list"+cri.getListLink();
+		return "redirec:/tobacco/list" + cri.getListLinkTobacco();
 	}
-*/
+
 }

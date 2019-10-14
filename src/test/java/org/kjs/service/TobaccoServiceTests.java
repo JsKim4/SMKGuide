@@ -61,7 +61,7 @@ public class TobaccoServiceTests {
 	public void testRegister() {
 		TobaccoVO vo = new TobaccoVO();
 		vo.setAmount(100.0);
-		vo.setBrand(new ComponentVO(17L, "brand", "brand"));
+		vo.setBrand(new ComponentVO(18L, "brand", "brand"));
 		vo.setCountry(new ComponentVO(5L, "country", "country"));
 		vo.setCompany(new ComponentVO(1L, "company", "company"));
 		vo.setType(new ComponentVO(2L, "type", "type"));
