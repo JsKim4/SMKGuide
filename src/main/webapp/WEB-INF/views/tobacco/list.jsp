@@ -36,7 +36,7 @@
 							</a></td>
 							<td><c:out value="${tobacco.tobaccoName }" /></td>
 							<td><c:out value="${tobacco.brand.name }" /></td>
-							<td><c:out value="${tobacco.amount }" /></td>
+							<td><c:out value="${tobacco.quantity }" /></td>
 							<td><c:out value="${tobacco.price }" /></td>
 						</tr>
 					</c:forEach>
@@ -129,7 +129,10 @@
 					if (result === '' || history.state) {
 						return;
 					}
-					if (parseInt(result) > 0) {
+					if(result==='success')
+						$(".modal-body").html(
+								"수정에 성공하였습니다.");
+					else if (parseInt(result) > 0) {
 						$(".modal-body").html(
 								"담배 " + parseInt(result) + " 번이 등록되었습니다.");
 					}else{

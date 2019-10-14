@@ -47,8 +47,8 @@ public class TobaccoMapperTests {
 	public void testUpdate() {
 		TobaccoVO t = new TobaccoVO();
 		t.setTobaccoId(2L);
-		t.setAmount(100.0);
-		t.setBrand(new ComponentVO(17L, "brand", "brand"));
+		t.setQuantity(100.0);
+		t.setBrand(new ComponentVO(10L, "brand", "brand"));
 		t.setCountry(new ComponentVO(5L, "country", "country"));
 		t.setCompany(new ComponentVO(1L, "company", "company"));
 		t.setType(new ComponentVO(2L, "type", "type"));
@@ -67,7 +67,7 @@ public class TobaccoMapperTests {
 	@Test
 	public void testInsertSelectKey() {
 		TobaccoVO t = new TobaccoVO();
-		t.setAmount(100.0);
+		t.setQuantity(100.0);
 		t.setBrand(new ComponentVO(17L, "brand", "brand"));
 		t.setCountry(new ComponentVO(5L, "country", "country"));
 		t.setCompany(new ComponentVO(1L, "company", "company"));
@@ -83,7 +83,7 @@ public class TobaccoMapperTests {
 	@Test
 	public void testInsert() {
 		TobaccoVO t = new TobaccoVO();
-		t.setAmount(100.0);
+		t.setQuantity(100.0);
 		t.setBrand(new ComponentVO(17L, "brand", "brand"));
 		t.setCountry(new ComponentVO(5L, "country", "country"));
 		t.setCompany(new ComponentVO(1L, "company", "company"));

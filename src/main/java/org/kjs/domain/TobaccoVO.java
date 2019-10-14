@@ -15,14 +15,14 @@ public class TobaccoVO {		//담배
 	ComponentVO brand;			//브랜드
 	Double tar;					//타르 함유량
 	Double nicotine;			//니코틴 함유량
-	Double amount;				//갯수
+	Double quantity;				//갯수
 	Long price;					//가격
 	
 	public TobaccoVO() {
 		this(-1L);
 	}
 	public TobaccoVO(Long tobaccoId) {
-		this.setAmount(20D);
+		this.setQuantity(20D);
 		this.setPrice(4500L);
 		this.setTobaccoId(tobaccoId);
 	}

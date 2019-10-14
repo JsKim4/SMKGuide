@@ -43,7 +43,7 @@ public class TobaccoServiceTests {
 	@Test
 	public void testModify() {
 		TobaccoVO vo = service.get(12L);
-		vo.setAmount(15.0);
+		vo.setQuantity(15.0);
 		vo.setBrand(new ComponentVO(8L, "brand", "brand"));
 		vo.setTobaccoName("malrboro22");
 		vo.setNicotine(2.0);
@@ -60,7 +60,7 @@ public class TobaccoServiceTests {
 	@Test
 	public void testRegister() {
 		TobaccoVO vo = new TobaccoVO();
-		vo.setAmount(100.0);
+		vo.setQuantity(100.0);
 		vo.setBrand(new ComponentVO(18L, "brand", "brand"));
 		vo.setCountry(new ComponentVO(5L, "country", "country"));
 		vo.setCompany(new ComponentVO(1L, "company", "company"));

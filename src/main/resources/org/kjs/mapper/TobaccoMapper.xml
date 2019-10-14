@@ -37,7 +37,7 @@
 	   	<id property="deleteFlag" column="delete_flag" />
 	   	<id property="tar" column="tar" />
 	   	<id property="nicotine" column="nicotine" />
-	   	<id property="amount" column="amount" />
+	   	<id property="quantity" column="amount" />
 	   	<id property="price" column="price" />
 	   	<association property="country"  javaType="org.kjs.domain.ComponentVO" >
 	    	<result property="id"  column="country_id" />
@@ -60,7 +60,7 @@
 	<insert id="insert">
 		insert into
 		tbl_tobacco(tobacco_name,country_id,company_id,type_id,brand_id,tar,nicotine,amount,price)
-		values(#{tobaccoName},#{country.id},#{company.id},#{type.id},#{brand.id},#{tar},#{nicotine},#{amount},#{price})
+		values(#{tobaccoName},#{country.id},#{company.id},#{type.id},#{brand.id},#{tar},#{nicotine},#{quantity},#{price})
 	</insert>
 	
 	<insert id="insertSelectKey">
@@ -70,7 +70,7 @@
 		</selectKey>
 		insert into
 		tbl_tobacco(tobacco_name,country_id,company_id,type_id,brand_id,tar,nicotine,amount,price)
-		values(#{tobaccoName},#{country.id},#{company.id},#{type.id},#{brand.id},#{tar},#{nicotine},#{amount},#{price})
+		values(#{tobaccoName},#{country.id},#{company.id},#{type.id},#{brand.id},#{tar},#{nicotine},#{quantity},#{price})
 	</insert>
 
 	<delete id="delete">
@@ -86,7 +86,7 @@
 			type_id = #{type.id},
 			tar = #{tar},
 			nicotine = #{nicotine},
-			amount = #{amount},
+			amount = #{quantity},
 			price = #{price}
 		where tobacco_id = #{tobaccoId}
 	</update>

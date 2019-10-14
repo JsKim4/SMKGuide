@@ -28,8 +28,8 @@
 						<input class="form-control" name='tar'>
 					</div>
 					<div class="col-lg-3 form-group">
-						<label>amount</label>
-						<input class="form-control" name='amount'>
+						<label>quantity</label>
+						<input class="form-control" name='quantity'>
 					</div>
 					<div class="col-lg-3 form-group">
 						<label>price</label>

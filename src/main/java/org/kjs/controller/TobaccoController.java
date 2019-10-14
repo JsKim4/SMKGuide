@@ -6,6 +6,8 @@ import org.kjs.domain.PageDTO;
 import org.kjs.domain.TobaccoVO;
 import org.kjs.service.ComponentService;
 import org.kjs.service.TobaccoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +25,7 @@ import lombok.AllArgsConstructor;
 public class TobaccoController {
 	TobaccoService service;
 	ComponentService CS;
-
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	public void RM(Model model) {
 		model.addAttribute("brandList", CS.getRegistList(new ComponentVO("brand")));
 		model.addAttribute("companyList", CS.getRegistList(new ComponentVO("company")));
@@ -61,6 +63,7 @@ public class TobaccoController {
 
 	@GetMapping({ "/get", "/modify" })
 	public void get(@RequestParam("tobaccoId") Long tobaccoId, @ModelAttribute("cri") Criteria cri, Model model) {
+		RM(model);
 		try {
 			model.addAttribute("tobacco", service.get(tobaccoId));
 		} catch (Exception e) {
@@ -71,9 +74,10 @@ public class TobaccoController {
 	@PostMapping("/modify")
 	public String modify(TobaccoVO vo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		if (service.modify(vo)) {
+			logger.info("modify : "+vo);
 			rttr.addAttribute("result", "success");
 		}
-		return "redirec:/tobacco/list" + cri.getListLinkTobacco();
+		return "redirect:/tobacco/list" + cri.getListLinkTobacco();
 	}
 
 	@PostMapping("/remove")
@@ -82,7 +86,7 @@ public class TobaccoController {
 		if (service.remove(tobaccoId)) {
 			rttr.addAttribute("result", "success");
 		}
-		return "redirec:/tobacco/list" + cri.getListLinkTobacco();
+		return "redirect:/tobacco/list" + cri.getListLinkTobacco();
 	}
 
 }
