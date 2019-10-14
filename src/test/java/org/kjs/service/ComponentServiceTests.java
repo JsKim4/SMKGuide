@@ -30,7 +30,6 @@ public class ComponentServiceTests {
 		ComponentVO vo = new ComponentVO();
 		vo.setType("brand");
 		Criteria cri = new Criteria(1,10);
-		service.getList(vo, cri).forEach(v -> log.info(v));
 	}
 	
 	@Test
