@@ -45,4 +45,18 @@ public class Criteria {			//담배 검색용 객체
 		
 		return builder.toUriString();
 	}
+	
+	public String getListLinkTobacco() {				//url parameter 생성
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+				.queryParam("pageNum", this.getPageNum())
+				.queryParam("amount",this.getAmount())
+				.queryParam("type", this.getType())
+				.queryParam("keyword",this.getKeyword())
+				.queryParam("bId", this.getBId())
+				.queryParam("nId",this.getNId())
+				.queryParam("mId", this.getMId())
+				.queryParam("tId",this.getTId());
+		
+		return builder.toUriString();
+	}
 }
