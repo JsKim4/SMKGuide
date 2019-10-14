@@ -1,7 +1,6 @@
 package org.kjs.service;
 
-import java.util.List;
-
+import org.kjs.domain.ComponentPageDTO;
 import org.kjs.domain.ComponentVO;
 import org.kjs.domain.Criteria;
 
@@ -14,7 +13,7 @@ public interface ComponentService {
 	
 	public ComponentVO get(ComponentVO vo);
 	
-	public List<ComponentVO> getList(ComponentVO vo,Criteria cri);
+	public ComponentPageDTO getList(ComponentVO vo,Criteria cri);
 	
 	public int getTotalCount(ComponentVO vo);
 	

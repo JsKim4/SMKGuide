@@ -1,9 +1,9 @@
 package org.kjs.service;
 
-import java.util.List;
-
+import org.kjs.domain.ComponentPageDTO;
 import org.kjs.domain.ComponentVO;
 import org.kjs.domain.Criteria;
+import org.kjs.domain.PageDTO;
 import org.kjs.mapper.ComponentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,9 +47,9 @@ public class ComponentServiceImpl implements ComponentService {
 	}
 
 	@Override
-	public List<ComponentVO> getList(ComponentVO vo, Criteria cri) {
+	public ComponentPageDTO getList(ComponentVO vo, Criteria cri) {
 		// TODO Auto-generated method stub
-		return mapper.getListWithPage(vo, cri);
+		return new ComponentPageDTO(new PageDTO(cri, mapper.getTotalCount(vo)),mapper.getListWithPage(vo, cri));
 	}
 
 	@Override
