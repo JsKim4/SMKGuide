@@ -32,7 +32,7 @@
 		</association>
 		<association property="member"  javaType="org.kjs.domain.MemberVO" >
 	    	<result property="memberId"  column="member_id" />
-			<result property="memberName"  column="member_name" />
+			<result property="email"  column="email" />
 		</association>
 	</resultMap>
 	<insert id="insert">
@@ -62,7 +62,7 @@
 		c.tobacco_id,
 		t.tobacco_name,
 		c.member_id,
-		m.member_name,
+		m.email,
 		c.content,
 		c.cdate
 		from tbl_comment as c
@@ -82,7 +82,7 @@
 		c.tobacco_id,
 		t.tobacco_name,
 		c.member_id,
-		m.member_name,
+		m.email,
 		c.content,
 		c.cdate
 		from tbl_comment as c
@@ -96,7 +96,7 @@
 		c.tobacco_id,
 		t.tobacco_name,
 		c.member_id,
-		m.member_name,
+		m.email,
 		c.content,
 		c.cdate
 		from tbl_comment as c
