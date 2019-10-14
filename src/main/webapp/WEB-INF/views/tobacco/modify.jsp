@@ -16,15 +16,14 @@
 			<!-- end panel-heading -->
 			<div class="panel-body">
 				<form role="form" action="./modify" method="post">
-					<input type="hidden" name='pageNum'
-						value='<c:out value="${cri.pageNum }"/>'> 
-						<input type="hidden" name='amount' value='<c:out value="${cri.amount }"/>'> 
-						<input type='hidden' name='type' value='${cri.type}'> 
-						<input type='hidden' name='keyword' value='${cri.keyword}'> 
-						<input type='hidden' name='tId' value='${cri.TId}'> 
-						<input type='hidden' name='mId' value='${cri.MId}'> 
-						<input type='hidden' name='nId' value='${cri.NId}'> 
-						<input type='hidden' name='bId' value='${cri.BId}'>
+					<input type="hidden" name='pageNum'  value='<c:out value="${cri.pageNum }"/>'>
+					<input type="hidden" name='amount'  value='<c:out value="${cri.amount }"/>'>
+					<input type='hidden' name='type' value='${cri.type}'>
+					<input type='hidden' name='keyword' value='${cri.keyword}'>
+					<input type='hidden' name='tId' value='${cri.TId}'>
+					<input type='hidden' name='mId' value='${cri.MId}'>
+					<input type='hidden' name='nId' value='${cri.NId}'>
+					<input type='hidden' name='bId' value='${cri.BId}'>
 
 					<div class="col-lg-1 form-group">
 						<input class="form-control" name='tobaccoId'
@@ -134,11 +133,19 @@
 				var amountTag = $("input[name='amount']").clone();
 				var typeTag = $("input[name='type']").clone();
 				var keywordTag = $("input[name='keyword']").clone();
+				var mIdTag = $("input[name='mId']").clone();
+				var nIdTag = $("input[name='nId']").clone();
+				var tIdTag = $("input[name='tId']").clone();
+				var bIdTag = $("input[name='bId']").clone();
 				formObj.empty(); // form태그 내의 모든 내용 삭제
 				formObj.append(pageNumTag);
 				formObj.append(amountTag);
 				formObj.append(typeTag);
 				formObj.append(keywordTag);
+				formObj.append(mIdTag);
+				formObj.append(nIdTag);
+				formObj.append(tIdTag);
+				formObj.append(bIdTag);
 			}
 			formObj.submit();
 		});

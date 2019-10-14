@@ -75,7 +75,7 @@ public class TobaccoController {
 	public String modify(TobaccoVO vo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		if (service.modify(vo)) {
 			logger.info("modify : "+vo);
-			rttr.addAttribute("result", "success");
+			rttr.addFlashAttribute("result", "success");
 		}
 		return "redirect:/tobacco/list" + cri.getListLinkTobacco();
 	}
@@ -84,7 +84,7 @@ public class TobaccoController {
 	public String remove(@RequestParam("tobaccoId") Long tobaccoId, @ModelAttribute("cri") Criteria cri,
 			RedirectAttributes rttr) {
 		if (service.remove(tobaccoId)) {
-			rttr.addAttribute("result", "success");
+			rttr.addFlashAttribute("result", "success");
 		}
 		return "redirect:/tobacco/list" + cri.getListLinkTobacco();
 	}

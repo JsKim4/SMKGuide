@@ -5,7 +5,7 @@
 <%@include file="../includes/header.jsp"%>
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Tobaccos</h1>
+		<h1 class="page-header">Components</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -22,43 +22,14 @@
 				<table class="table table-striped table-bordered table hover">
 					<thead>
 						<tr>
-							<th>#번호</th>
-							<th>담배명</th>
-							<th>브랜드명</th>
-							<th>수량</th>
-							<th>가격</th>
+							<th>번호</th>
+							<th>이름</th>
 						</tr>
 					</thead>
-					<c:forEach items="${list}" var="tobacco">
-						<tr>
-							<td><a class='move' href='<c:out value="${tobacco.tobaccoId}"/>'>
-									<c:out value="${tobacco.tobaccoId}" />
-							</a></td>
-							<td><c:out value="${tobacco.tobaccoName }" /></td>
-							<td><c:out value="${tobacco.brand.name }" /></td>
-							<td><c:out value="${tobacco.quantity }" /></td>
-							<td><c:out value="${tobacco.price }" /></td>
-						</tr>
-					</c:forEach>
 				</table>
 				<div class='pull-right'>
 					<ul class="pagination">
-						<c:if test="${pageMaker.prev}">
-							<li class="paginate_button previous"><a href="${pageMaker.startPage-1 }"> <c:out
-										value="Previous" />
-							</a></li>
-						</c:if>
-						<c:forEach var="num" begin="${pageMaker.startPage}"
-							end="${pageMaker.endPage}">
-							<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active" : "" }"><a href="${num}"> <c:out
-										value="${num}" />
-							</a></li>
-						</c:forEach>
-						<c:if test="${pageMaker.next}">
-							<li class="paginate_button next"><a href="${pageMaker.endPage+1 }"> <c:out
-										value="Next" />
-							</a></li>
-						</c:if>
+						
 					</ul>
 					<form id='actionForm' action="./list" method='get'>
 						<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
@@ -69,42 +40,6 @@
 						<input type='hidden' name='mId' value='${pageMaker.cri.MId}'>
 						<input type='hidden' name='nId' value='${pageMaker.cri.NId}'>
 						<input type='hidden' name='bId' value='${pageMaker.cri.BId}'>
-					</form>
-					<form id='searchForm' action="./list" method='get'>
-						<div>
-							<select name='bId' >
-								<option value="" <c:out value="${pageMaker.cri.BId==null?'selected':''}"/>>Brand</option>
-								<c:forEach items="${brandList}" var="brand">
-									<option value="${brand.id}" <c:out value="${pageMaker.cri.BId==brand.id?'selected':''}"/>>${brand.name }</option>
-								</c:forEach>
-							</select> 
-							
-							<select name='tId'>
-								<option value="">Type</option>
-								<c:forEach items="${typeList}" var="type">
-									<option value="${type.id}" <c:out value="${pageMaker.cri.TId==type.id?'selected':''}"/>>${type.name }</option>
-								</c:forEach>
-							</select> 
-							
-							<select name='nId'>
-								<option value="" >country</option>
-								<c:forEach items="${countryList}" var="country">
-									<option value="${country.id}" <c:out value="${pageMaker.cri.NId==country.id?'selected':''}"/>>${country.name }</option>
-								</c:forEach>
-							</select> 
-							
-							<select name='mId'>
-								<option value="">Company</option>
-								<c:forEach items="${companyList}" var="company">
-									<option value="${company.id}" <c:out value="${pageMaker.cri.MId==company.id?'selected':''}"/>>${company.name }</option>
-								</c:forEach>
-							</select> 
-							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
-							<input type='hidden' name='type' value='${pageMaker.cri.type}'>
-							<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-							<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-							<button class='btn btn-default'>Search</button>
-						</div>
 					</form>
 				</div>
 				<!-- end pull-right -->
