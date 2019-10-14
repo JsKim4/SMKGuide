@@ -12,7 +12,7 @@
 
 # step 3. mapper.xml 생성 및 테스트 F
 
-# step 4. service 구축 및 테스트
+# step 4. service 구축 및 테스트 F
 
 # step 5. controller 구축 및 테스트
 
