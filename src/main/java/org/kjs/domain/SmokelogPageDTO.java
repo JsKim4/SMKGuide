@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SmokelogPageDTO {
-	private int smokelogCount;			//smoke log 개수
+	private PageDTO smokelogPage;			//smoke log 개수
 	private List<SmokelogVO> list;		// Tobacco 1개당 or user 한명당 list
 }

@@ -17,8 +17,13 @@ public class TobaccoVO {		//담배
 	Double nicotine;			//니코틴 함유량
 	Double amount;				//갯수
 	Long price;					//가격
+	
 	public TobaccoVO() {
+		this(-1L);
+	}
+	public TobaccoVO(Long tobaccoId) {
 		this.setAmount(20D);
 		this.setPrice(4500L);
+		this.setTobaccoId(tobaccoId);
 	}
 }
