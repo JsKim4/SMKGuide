@@ -2,10 +2,8 @@ package org.kjs.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class TobaccoVO {		//담배
 	Long tobaccoId;				//담배고유번호
@@ -19,4 +17,8 @@ public class TobaccoVO {		//담배
 	Double nicotine;			//니코틴 함유량
 	Double amount;				//갯수
 	Long price;					//가격
+	public TobaccoVO() {
+		this.setAmount(20D);
+		this.setPrice(4500L);
+	}
 }
