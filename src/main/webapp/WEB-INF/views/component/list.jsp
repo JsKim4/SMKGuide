@@ -19,7 +19,7 @@
 			</div>
 			<!-- end panel-heading -->
 			<div class="panel-body">
-				<table class="table table-striped table-bordered table hover">
+				<table class="table table-striped table-bordered table hover componentTable">
 					<thead>
 						<tr>
 							<th width="10%">번호</th>
@@ -28,9 +28,8 @@
 					</thead>
 					<c:forEach items="${list}" var="component">
 						<tr>
-							<td width="10%"><a class='move' href='<c:out value="${component.id}"/>'>
-									<c:out value="${component.id }" />
-							</a></td>
+							<td class="componentId" data-id='${component.id}' width="10%">
+									<c:out value="${component.id }" /></td>
 							<td width="90%"><c:out value="${component.name }" /></td>
 						</tr>
 					</c:forEach>
@@ -85,7 +84,30 @@
 			var modalModBtn = $("#modalModBtn");
 			var modalRemoveBtn = $("#modalRemoveBtn");
 			var modalRegisterBtn = $("#modalRegisterBtn");
-			//등록
+			
+			
+			
+			
+			
+			$("#componentTable").on("click",".componentId",function(e){
+				var rno = $(this).data("id");
+				console.log(rno);
+				e.preventDefault();
+				/*replyService.get(rno,function(reply){
+					modalInputReply.val(reply.reply);
+					modalInputReplyer.val(reply.replyer);
+					modalInputReplyDate.val(
+							replyService.displayTime(reply.replydate)).
+							attr("readonly","readonly");
+					modal.data("rno",reply.rno);
+					
+					modal.find("button[id != 'modalCloseBtn']").hide();
+					modalModBtn.show();
+					modalRemoveBtn.show();
+					
+					$(".modal").modal("show");*/
+				});
+			/*Component 등록 시*/
 			$("#regBtn").on("click", function() {
 				modal.find("input[name='name']").val("");
 				modal.find("button[id !='modalCloseBtn']").hide();
@@ -94,7 +116,7 @@
 				
 				$("#componentModal").modal("show");
 			});
-				
+			/*Component 등록 버튼 클릭시*/
 			modalRegisterBtn.on("click",function(e){
 				var component = {
 					type:comType,
