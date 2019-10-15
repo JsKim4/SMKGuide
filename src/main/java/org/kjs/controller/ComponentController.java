@@ -4,6 +4,8 @@ import org.kjs.domain.ComponentVO;
 import org.kjs.domain.Criteria;
 import org.kjs.domain.PageDTO;
 import org.kjs.service.ComponentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ComponentController {
 	//Component Service로 처리
 	private ComponentService service;
-	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	/* 기본골자
 	 * url로 들어오는 type에 따라 table을 변경 하며 insert 실행
 	 * component로 묶인 table 의 구성요소는 id,name만 존재하며
@@ -63,6 +65,7 @@ public class ComponentController {
 		int total = service.getTotalCount(vo,cri);
 		model.addAttribute("list", service.getList(vo, cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		model.addAttribute("componentType",type);
 		return "component/list";
 	}
 	

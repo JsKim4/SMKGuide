@@ -5,7 +5,7 @@
 <%@include file="../includes/header.jsp"%>
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Components</h1>
+		<h1 class="page-header">Components - ${componentType} </h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -13,35 +13,55 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Tobacco List
+				 ${componentType} List
 				<button id="regBtn" type="button" class="btn btn-xs pull-right">
-					Register New Tobacco</button>
+					Register New ${componentType}</button>
 			</div>
 			<!-- end panel-heading -->
 			<div class="panel-body">
 				<table class="table table-striped table-bordered table hover">
 					<thead>
 						<tr>
-							<th>번호</th>
-							<th colspan="3">이름</th>
+							<th width="10%">번호</th>
+							<th width="90%">이름</th>
 						</tr>
 					</thead>
+					<c:forEach items="${list}" var="component">
+						<tr>
+							<td width="10%"><a class='move' href='<c:out value="${component.id}"/>'>
+									<c:out value="${component.id }" />
+							</a></td>
+							<td width="90%"><c:out value="${component.name }" /></td>
+						</tr>
+					</c:forEach>
 				</table>
 				<div class='pull-right'>
 					<ul class="pagination">
-						
+						<c:if test="${pageMaker.prev}">
+							<li class="paginate_button previous"><a href="${pageMaker.startPage-1 }"> <c:out
+										value="Previous" />
+							</a></li>
+						</c:if>
+						<c:forEach var="num" begin="${pageMaker.startPage}"
+							end="${pageMaker.endPage}">
+							<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active" : "" }"><a href="${num}"> <c:out
+										value="${num}" />
+							</a></li>
+						</c:forEach>
+						<c:if test="${pageMaker.next}">
+							<li class="paginate_button next"><a href="${pageMaker.endPage+1 }"> <c:out
+										value="Next" />
+							</a></li>
+						</c:if>
 					</ul>
 					<form id='actionForm' action="./list" method='get'>
 						<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 						<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 						<input type='hidden' name='type' value='${pageMaker.cri.type}'>
 						<input type='hidden' name='keyword' value='${pageMaker.cri.keyword}'>
-						<input type='hidden' name='tId' value='${pageMaker.cri.TId}'>
-						<input type='hidden' name='mId' value='${pageMaker.cri.MId}'>
-						<input type='hidden' name='nId' value='${pageMaker.cri.NId}'>
-						<input type='hidden' name='bId' value='${pageMaker.cri.BId}'>
 					</form>
 				</div>
+				<%@include file="component_modal.jsp"%>
 				<!-- end pull-right -->
 				<%@include file="../includes/modal.jsp"%>
 			</div>
@@ -53,49 +73,64 @@
 </div>
 <!-- /.row -->
 <%@include file="../includes/footer.jsp"%>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/component.js?ver=2"></script>
 <script type="text/javascript">
 	$(document).ready(
-			function() {
-				var result = '<c:out value="${result}"/>';
-				checkModal(result);
-				//checkModal 1회 시행후  history의 state 상태를 null 처리하여 뒤로가기 시에도 modal 시행 안되게 변경
-				history.replaceState({}, null, null);
-				function checkModal(result) {
-					if (result === '' || history.state) {
-						return;
-					}
-					if(result==='success')
-						$(".modal-body").html(
-								"수정에 성공하였습니다.");
-					else if (parseInt(result) > 0) {
-						$(".modal-body").html(
-								"담배 " + parseInt(result) + " 번이 등록되었습니다.");
-					}else{
-						$(".modal-body").html(
-								"등록이 실패하였습니다.");
-						
-					}
-					$("#myModal").modal("show");
-				}
-
-				$("#regBtn").on("click", function() {
-					self.location = "./register";
-				});
+		function() {
+			console.log(componentService);
+			var comType = '<c:out value = "${componentType}"/>'
+			var modal = $("#componentModal");
+			var modalInputName = modal.find("input[name='name']");
+		
+			var modalModBtn = $("#modalModBtn");
+			var modalRemoveBtn = $("#modalRemoveBtn");
+			var modalRegisterBtn = $("#modalRegisterBtn");
+			//등록
+			$("#regBtn").on("click", function() {
+				modal.find("input[name='name']").val("");
+				modal.find("button[id !='modalCloseBtn']").hide();
 				
-				var actionForm = $("#actionForm");
-				$(".paginate_button a").on("click",function(e){
-					e.preventDefault();
-					console.log('click');
-					actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-					actionForm.submit();
+				modalRegisterBtn.show();
+				
+				$("#componentModal").modal("show");
+			});
+				
+			modalRegisterBtn.on("click",function(e){
+				var component = {
+					type:comType,
+					name:modalInputName.val()
+				};
+				if(component.name===""){
+					alert("입력이 필요합니다.");
+					return;
+				}
+				componentService.add(component,function(result){
+					modal.find("input").val("");
+					modal.modal("hide");
+					location.reload();
 					
 				});
-				
-				$(".move").on("click",function(e){
-					e.preventDefault();
-					actionForm.append("<input type='hidden' name='tobaccoId' value='"+$(this).attr("href")+"'>");
-					actionForm.attr("action","./get");
-					actionForm.submit();
-				});
 			});
+			
+			
+				
+				
+			// page 넘김
+			var actionForm = $("#actionForm");
+			$(".paginate_button a").on("click",function(e){
+				e.preventDefault();
+				console.log('click');
+				actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+				actionForm.submit();
+					
+			});
+				// 상세정보
+			$(".move").on("click",function(e){
+				e.preventDefault();
+				actionForm.append("<input type='hidden' name='tobaccoId' value='"+$(this).attr("href")+"'>");
+				actionForm.attr("action","./get");
+				actionForm.submit();
+			});
+		}
+	);
 </script>

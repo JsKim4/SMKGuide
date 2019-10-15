@@ -37,18 +37,16 @@ public class ComponentRestController {
 	 * create 와 modify는
 	 * requestBody로 vo를 받게 되는데 vo안에 있는 name field 만 사용함
 	 * */
-	@PostMapping(value = "/{type}/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> create(@RequestBody ComponentVO vo, @PathVariable("type") String type) {
-		vo.setType(type);
+	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<String> create(@RequestBody ComponentVO vo) {
 		log.info(vo.toString());
 		return service.register(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@PutMapping(value = "/{type}/{id}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> modify(@RequestBody ComponentVO vo, @PathVariable("type") String type,
+	@PutMapping(value = "/{id}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<String> modify(@RequestBody ComponentVO vo,
 			@PathVariable("id") Long id) {
-		vo.setType(type);
 		vo.setId(id);
 		return service.modify(vo) ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
