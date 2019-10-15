@@ -23,7 +23,7 @@
 					<thead>
 						<tr>
 							<th>번호</th>
-							<th>이름</th>
+							<th colspan="3">이름</th>
 						</tr>
 					</thead>
 				</table>
@@ -96,28 +96,6 @@
 					actionForm.append("<input type='hidden' name='tobaccoId' value='"+$(this).attr("href")+"'>");
 					actionForm.attr("action","./get");
 					actionForm.submit();
-				});
-				
-				var searchForm =$('#searchForm');
-				$("#searchForm button").on("click",function(e){
-					var type="";
-					if(searchForm.find("select[name='bId']").val()){
-						type = type+"B";
-					}
-					if(searchForm.find("select[name='tId']").val()){
-						type = type+"T";
-					}
-					if(searchForm.find("select[name='mId']").val()){
-						type = type+"M";
-					}
-					if(searchForm.find("select[name='nId']").val()){
-						type = type+"N";
-					}
-					searchForm.find("input[name='type']").val(type);
-					searchForm.find("input[name='pageNum']").val("1");
-					e.preventDefault();
-					searchForm.submit();
-					
 				});
 			});
 </script>

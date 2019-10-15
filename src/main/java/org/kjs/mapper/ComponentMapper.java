@@ -21,5 +21,5 @@ public interface ComponentMapper {
 
 	public List<ComponentVO> getListWithPage(@Param("vo") ComponentVO vo,@Param("cri") Criteria cri);
 
-	public int getTotalCount(@Param("vo") ComponentVO vo);
+	public int getTotalCount(@Param("vo") ComponentVO vo,@Param("cri") Criteria cri);
 }

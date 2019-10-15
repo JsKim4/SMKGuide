@@ -227,13 +227,20 @@
 								</span>
 							</div> 
 						</li>
-						<li><a href="../area/map"><i class="fa fa-dashboard fa-fw"></i>
+						<li><a href="/area/map"><i class="fa fa-dashboard fa-fw"></i>
 								Smoking Area</a></li>
-						<li><a href="../component/list"><i class="fa fa-sitemap fa-fw"></i>
-								Component List</a></li>
-						<li><a href="../tobacco/list"><i class="fa fa-table fa-fw"></i>
+						<li><a href="#"><i class="fa fa-wrench fa-fw"></i> Component
+						List<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a href="/component/brand/list">Brand</a></li>
+								<li><a href="/component/company/list">Company</a></li>
+								<li><a href="/component/country/list">Country</a></li>
+								<li><a href="/component/type/list">Type</a></li>
+							</ul> <!-- /.nav-second-level -->
+						</li>
+						<li><a href="/tobacco/list"><i class="fa fa-table fa-fw"></i>
 								Tobacco List</a></li>
-						<li><a href="../misc/info"><i class="fa fa-edit fa-fw"></i>
+						<li><a href="/misc/info"><i class="fa fa-edit fa-fw"></i>
 								Info</a></li>
 					</ul>
 					<!-- /#side-menu -->

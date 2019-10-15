@@ -22,7 +22,6 @@ public class ComponentServiceTests {
 	public void getTotalCount() {
 		ComponentVO vo = new ComponentVO();
 		vo.setType("brand");
-		log.info(service.getTotalCount(vo));
 	}
 	
 	@Test

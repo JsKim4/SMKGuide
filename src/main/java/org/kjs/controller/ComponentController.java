@@ -1,26 +1,20 @@
 package org.kjs.controller;
 
-import org.kjs.domain.ComponentPageDTO;
 import org.kjs.domain.ComponentVO;
 import org.kjs.domain.Criteria;
+import org.kjs.domain.PageDTO;
 import org.kjs.service.ComponentService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/component")
-@RestController
+@Controller
 @Slf4j
 @AllArgsConstructor
 public class ComponentController {
@@ -39,28 +33,46 @@ public class ComponentController {
 	 * create 와 modify는
 	 * requestBody로 vo를 받게 되는데 vo안에 있는 name field 만 사용함
 	 * */
-	@PostMapping(value = "/{type}/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> create(@RequestBody ComponentVO vo, @PathVariable("type") String type) {
+	
+	/*@PostMapping("/{type}/register")
+	public String register(ComponentVO vo,@PathVariable("type") String type, RedirectAttributes rttr) {
 		vo.setType(type);
-		log.info(vo.toString());
-		return service.register(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
-				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		try {
+			if(vo.getName().length()>0){
+				service.register(vo);
+				rttr.addFlashAttribute("result",vo.getId());
+				return "redirect:/component/"+type+"/list";	
+			}
+		}catch(Exception e) {}
+		rttr.addFlashAttribute("result",-1);
+		return "redirect:/component/"+type+"/list";	
 	}
 	
-	@PutMapping(value = "/{type}/{id}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> modify(@RequestBody ComponentVO vo, @PathVariable("type") String type,
-			@PathVariable("id") Long id) {
-		vo.setType(type);
-		vo.setId(id);
-		return service.modify(vo) ? new ResponseEntity<>("success", HttpStatus.OK)
-				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	@PostMapping("/{type}/modify")
+	public String modify(ComponentVO vo, @ModelAttribute("cri") Criteria cri,@PathVariable("type") String type, RedirectAttributes rttr) {
+		if (service.modify(vo)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/component"+type+"/list" + cri.getListLink();
 	}
+	*/
+	@GetMapping("/{type}/list")
+	public String list(Model model, Criteria cri,@PathVariable("type") String type) {
+		ComponentVO vo = new ComponentVO(type);
+		cri.setStartIndex();
+		int total = service.getTotalCount(vo,cri);
+		model.addAttribute("list", service.getList(vo, cri));
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		return "component/list";
+	}
+	
+	
 	
 	
 	
 	/*
 	 * url로 type 과 page를 받음
-	 * */
+	 * 
 	@GetMapping(value = "pages/{type}/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<ComponentPageDTO> getList(@PathVariable("page") int page, @PathVariable("type") String type) {
@@ -73,7 +85,7 @@ public class ComponentController {
 	/*
 	 * get 과  remove의 경우 url을 통해 type과 id 만 받아 처리함
 	 * url로 type 과 page를 받음
-	 * */
+	 * 
 	
 	@GetMapping(value = "/{type}/{id}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -88,6 +100,6 @@ public class ComponentController {
 		return service.remove(vo) ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
+	 */
 
 }

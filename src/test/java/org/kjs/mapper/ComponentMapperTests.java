@@ -21,8 +21,9 @@ public class ComponentMapperTests {
 	@Test
 	public void testGetTotalCount() {
 		ComponentVO vo = new ComponentVO();
+		Criteria cri = new Criteria(1,10);
 		vo.setType("country");
-		log.info(cmapper.getTotalCount(vo));
+		log.info(cmapper.getTotalCount(vo,cri));
 		
 	}
 	

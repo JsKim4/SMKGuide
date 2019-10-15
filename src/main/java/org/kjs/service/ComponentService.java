@@ -17,7 +17,7 @@ public interface ComponentService {
 	
 	public ComponentPageDTO getList(ComponentVO vo,Criteria cri);
 	
-	public int getTotalCount(ComponentVO vo);
+	public int getTotalCount(ComponentVO vo,Criteria cri);
 	
 	public List<ComponentVO> getRegistList(ComponentVO vo);
 }

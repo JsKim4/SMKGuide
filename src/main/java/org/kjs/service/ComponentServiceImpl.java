@@ -51,13 +51,13 @@ public class ComponentServiceImpl implements ComponentService {
 	@Override
 	public ComponentPageDTO getList(ComponentVO vo, Criteria cri) {
 		// TODO Auto-generated method stub
-		return new ComponentPageDTO(new PageDTO(cri, mapper.getTotalCount(vo)),mapper.getListWithPage(vo, cri));
+		return new ComponentPageDTO(new PageDTO(cri, mapper.getTotalCount(vo,cri)),mapper.getListWithPage(vo, cri));
 	}
 
 	@Override
-	public int getTotalCount(ComponentVO vo) {
+	public int getTotalCount(ComponentVO vo,Criteria cri) {
 		// TODO Auto-generated method stub
-		return mapper.getTotalCount(vo);
+		return mapper.getTotalCount(vo,cri);
 	}
 
 	@Override
