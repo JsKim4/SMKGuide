@@ -28,8 +28,8 @@
 					</thead>
 					<c:forEach items="${list}" var="component">
 						<tr>
-							<td class="componentId" data-id='${component.id}' width="10%">
-									<c:out value="${component.id }" /></td>
+							<td width="10%"><a class="move" href='<c:out value="${component.id }" />'>
+									<c:out value="${component.id }" /></a></td>
 							<td width="90%"><c:out value="${component.name }" /></td>
 						</tr>
 					</c:forEach>
@@ -72,7 +72,7 @@
 </div>
 <!-- /.row -->
 <%@include file="../includes/footer.jsp"%>
-<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/component.js?ver=2"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/component.js?ver=13"></script>
 <script type="text/javascript">
 	$(document).ready(
 		function() {
@@ -80,6 +80,7 @@
 			var comType = '<c:out value = "${componentType}"/>'
 			var modal = $("#componentModal");
 			var modalInputName = modal.find("input[name='name']");
+			var modalInputId = modal.find("input[name='id']");
 		
 			var modalModBtn = $("#modalModBtn");
 			var modalRemoveBtn = $("#modalRemoveBtn");
@@ -88,35 +89,70 @@
 			
 			
 			
-			
-			$("#componentTable").on("click",".componentId",function(e){
-				var rno = $(this).data("id");
-				console.log(rno);
-				e.preventDefault();
-				/*replyService.get(rno,function(reply){
-					modalInputReply.val(reply.reply);
-					modalInputReplyer.val(reply.replyer);
-					modalInputReplyDate.val(
-							replyService.displayTime(reply.replydate)).
-							attr("readonly","readonly");
-					modal.data("rno",reply.rno);
-					
-					modal.find("button[id != 'modalCloseBtn']").hide();
-					modalModBtn.show();
-					modalRemoveBtn.show();
-					
-					$(".modal").modal("show");*/
+			modalRemoveBtn.on("click",function(e){
+				var comp = {
+						id:modalInputId.val(),
+						type:comType
+				};  
+				componentService.remove(comp,function(comp){
+					modal.find("input").val("");
+					modal.modal("hide");
+					location.reload();
+				},function(er){
+					alert("삭제에 실패하였습니다.\n 해당 Component로 구성된 담배를 모두 삭제 혹은 변경 해야 합니다.");
+						
 				});
-			/*Component 등록 시*/
+				
+			});
+			
+			
+			/*modify*/
+			modalModBtn.on("click",function(e){
+				var comp = {
+						id:modalInputId.val(),
+						name:modalInputName.val(),
+						type:comType
+				};  
+				componentService.modify(comp,function(comp){
+					modal.find("input").val("");
+					modal.modal("hide");
+					location.reload();
+				});
+				
+			});
+			
+			
+			
+			/*자세히 보기*/
+			$(".move").on("click",function(e){
+				e.preventDefault();
+				var comp = {
+						id:$(this).attr("href"),
+						type:comType
+					};
+				console.log(comp);
+				componentService.get(comp,function(component){
+					modalInputName.val(component.name);
+					modalInputId.val(component.id);
+					modal.find("button[id !='modalRegisterBtn']").show();
+					modalRegisterBtn.hide();
+					$("#componentModal").modal("show");
+				});
+				
+			});
+			
+			/*Component 등록Form*/
 			$("#regBtn").on("click", function() {
 				modal.find("input[name='name']").val("");
 				modal.find("button[id !='modalCloseBtn']").hide();
 				
 				modalRegisterBtn.show();
-				
 				$("#componentModal").modal("show");
 			});
-			/*Component 등록 버튼 클릭시*/
+			
+			
+			
+			/*Component 등록*/
 			modalRegisterBtn.on("click",function(e){
 				var component = {
 					type:comType,
@@ -145,13 +181,6 @@
 				actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 				actionForm.submit();
 					
-			});
-				// 상세정보
-			$(".move").on("click",function(e){
-				e.preventDefault();
-				actionForm.append("<input type='hidden' name='tobaccoId' value='"+$(this).attr("href")+"'>");
-				actionForm.attr("action","./get");
-				actionForm.submit();
 			});
 		}
 	);

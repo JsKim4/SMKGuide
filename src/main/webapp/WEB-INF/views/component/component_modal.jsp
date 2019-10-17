@@ -10,6 +10,10 @@
 				<h4 class="modal-title" id="myModalLabel">${componentType} Modal</h4>
 			</div>
 			<div class="modal-body">
+			<div class="form-group">
+					<label>ID</label> <input class="form-control" name='id'
+						value='<c:out value =""/>' readonly='readonly'>
+				</div>
 				<div class="form-group">
 					<label>Type</label> <input class="form-control" name='type'
 						value='<c:out value = "${componentType}"/>' readonly='readonly'>

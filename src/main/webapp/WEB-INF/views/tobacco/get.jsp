@@ -34,12 +34,12 @@
 						<input class="form-control" name='tar' value='<c:out value="${tobacco.tar }"/>' readonly="readonly">
 					</div>
 					<div class="form-group">
-						<label>price</label> 
-						<input class="form-control" name='price' value='<c:out value="${tobacco.price }"/>' readonly="readonly">
-					</div>
-					<div class="form-group">
 						<label>amount</label> 
 						<input class="form-control" name='amount' value='<c:out value="${tobacco.quantity }"/>' readonly="readonly">
+					</div>
+					<div class="form-group">
+						<label>price</label> 
+						<input class="form-control" name='price' value='<c:out value="${tobacco.price }"/>' readonly="readonly">
 					</div>
 				</div>
 					<div class="form-group col-lg-3">
