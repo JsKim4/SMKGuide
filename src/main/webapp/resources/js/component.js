@@ -39,7 +39,7 @@ var componentService =(function(){
 		})
 	}
 	
-function modify(component,callback,error){ //전달되는 파라미터
+	function modify(component,callback,error){ //전달되는 파라미터
 		
 		$.ajax({//보냄
 			type : 'put', // post 형식

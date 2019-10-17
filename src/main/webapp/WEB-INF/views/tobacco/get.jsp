@@ -113,21 +113,25 @@
 </div>
 <!-- ./end row -->
 <%@include file="../includes/footer.jsp"%>
-<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/reply.js?ver=11"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/comment.js?ver=16"></script>
 <!-- reply 관련 script -->
 <script>
 	$(document).ready(function() {
-		var bnoValue='<c:out value="${board.bno}"/>'
-		var replyUL = $(".chat");
+		var tobaccoValue='<c:out value="${tobacco.tobaccoId}"/>'
+		var commentUL = $(".chat");
+		var pageNum = 1;
+		var replyPageFooter = $(".panel-footer");
 		
 		showList(1);
 		
 		function showList(page){
-			replyService.getList(
-				{bno:bnoValue,page:page||1},
-				function(replyCnt,list){
+			commentService.getList(
+				{type:'T',id:tobaccoValue,page:page||1,},
+				function(pageDTO,list){
+					console.log(pageDTO);
+					console.log(list);
 					if(page==-1){
-						pageNum=math.ceil(replyCnt/10.0);
+						pageNum=pageDTO.total;
 						showList(pageNum);
 						return;
 					}
@@ -136,19 +140,38 @@
 						return;
 					}
 					for(var i=0,len=list.length || 0; i<len;i++){
-						str+="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+						str+="<li class='left clearfix' data-rno='"+list[i].commentId+"'>";
 						str+="	<div class='header'>";
-						str+="		<strong class='primary-font'>"+list[i].replyer+"</strong>";
-						str+="		<small class='pull-right text-muted'>"+replyService.displayTime(list[i].updatedate)+"</small>";
+						str+="		<strong class='primary-font'>"+list[i].member.email+"</strong>";
+						str+="		<small class='pull-right text-muted'>"+list[i].cdate+"</small>";
 						str+="	</div>";
-						str+="	<p>"+list[i].reply+"</p>";
+						str+="	<p>"+list[i].content+"</p>";
 						str+="</li>";
 					}
-					replyUL.html(str);
-					showReplyPage(replyCnt);
+					commentUL.html(str);
+					showCommentPage(pageDTO);
 				}
 			);
 		}
+		function showCommentPage(pageDTO){
+			
+			var str = "<ul class='pagination pull-right'>";
+			
+			if(pageDTO.prev){
+				str+="<li class='page-item'><a class='page-link' href='"+(pageDTO.startPage-1)+"'>Previous</a></li>";
+			}
+			for(var i=pageDTO.startPage;i<=pageDTO.endPage;i++){
+				var active = pageNum== i ? "active" : "";
+				str+="<li class='page-item'><a class='page-link' href='"+i+"'>"+i+"</a></li>";
+			}	
+			
+			if(pageDTO.next){
+				str+="<li class='page-item'><a class='page-link' href='"+(pageDTO.endPage+1)+"'>Next</a></li>";
+			}
+			str+="</ul>"
+			replyPageFooter.html(str);
+		}
+		/*
 		var modal = $(".modal");
 		var modalInputReply = modal.find("input[name='reply']");
 		var modalInputReplyer = modal.find("input[name='replyer']");
@@ -226,41 +249,6 @@
 			})
 		});
 		
-		var pageNum = 1;
-		var replyPageFooter = $(".panel-footer");
-		
-		function showReplyPage(replyCnt){
-			var endNum = Math.ceil(pageNum/10.0)*10;
-			var startNum = endNum-9;
-			var prev = startNum!=1;
-			var next = false;
-			
-			if(endNum*10 >= replyCnt){
-				endNum = Math.ceil(replyCnt/10.0);
-			}
-			
-			if(endNum*10 < replyCnt){
-				next = true;
-			}
-			
-			var str = "<ul class='pagination pull-right'>";
-			
-			if(prev){
-				str+="<li class='page-item'><a class='page-link' href='"+(startNum-1)+"'>Previous</a></li>";
-			}
-			for(var i=startNum;i<=endNum;i++){
-				var active = pageNum== i ? "active" : "";
-				str+="<li class='page-item'><a class='page-link' href='"+i+"'>"+i+"</a></li>";
-			}
-			
-			
-			if(next){
-				str+="<li class='page-item'><a class='page-link' href='"+(endNum+1)+"'>Next</a></li>";
-			}
-			str+="</ul>"
-			console.log(str);
-			replyPageFooter.html(str);
-		}
 		
 		replyPageFooter.on("click","li a",function(e){
 			e.preventDefault();
@@ -269,14 +257,13 @@
 			pageNum = targetPageNum;
 			showList(pageNum);
 		});
-		
+		*/
 		
 	});
 </script>
 <!-- board 관련 script -->
 <script type="text/javascript">
 	$(document).ready(function() {
-		console.log(replyService);
 		var result = '<c:out value="${result}"/>';
 		checkModal(result);
 		//checkModal 1회 시행후  history의 state 상태를 null 처리하여 뒤로가기 시에도 modal 시행 안되게 변경

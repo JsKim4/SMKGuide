@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentPageDTO {
-	private PageDTO commnetPage;		//comment 개수
+	private PageDTO commentPage;		//comment 개수
 	private List<CommentVO> list;		// Tobacco 1개당 list개수
 }

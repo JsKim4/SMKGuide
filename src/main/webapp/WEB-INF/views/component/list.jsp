@@ -99,7 +99,7 @@
 					modal.modal("hide");
 					location.reload();
 				},function(er){
-					alert("삭제에 실패하였습니다.\n 해당 Component로 구성된 담배를 모두 삭제 혹은 변경 해야 합니다.");
+					alert("삭제에 실패하였습니다.\n해당 Component로 구성된 담배를 모두 삭제 혹은 변경 해야 합니다.");
 						
 				});
 				
