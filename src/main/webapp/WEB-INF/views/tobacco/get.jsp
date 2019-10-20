@@ -71,7 +71,7 @@
 					<input type='hidden' name='nId' value='${cri.NId}'>
 					<input type='hidden' name='bId' value='${cri.BId}'>
 				</form>
-				<%@include file="reply_modal.jsp"%>
+				<%@include file="comment_modal.jsp"%>
 			</div>
 			<!-- end panel body -->
 		</div>
@@ -84,8 +84,8 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-comments fa-fw"></i>Reply
-				<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
+				<i class="fa fa-comments fa-fw"></i>Comment
+				<button id='addCommentBtn' class='btn btn-primary btn-xs pull-right'>New Comment</button>
 			</div>
 			<!-- end pannel heading -->
 			<div class="panel-body">
@@ -113,23 +113,22 @@
 </div>
 <!-- ./end row -->
 <%@include file="../includes/footer.jsp"%>
-<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/comment.js?ver=16"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/comment.js?ver=6"></script>
 <!-- reply 관련 script -->
 <script>
 	$(document).ready(function() {
-		var tobaccoValue='<c:out value="${tobacco.tobaccoId}"/>'
+		var tobaccoValue='<c:out value="${tobacco.tobaccoId}"/>'//출력되고 있는 담배 고유 번호
 		var commentUL = $(".chat");
-		var pageNum = 1;
-		var replyPageFooter = $(".panel-footer");
+		var pageNum = 1; // Comment  페이지
+		var commentPageFooter = $(".panel-footer"); //Comment 페이지 넘김 처리
+		
 		
 		showList(1);
-		
+		//Comment list 출력
 		function showList(page){
 			commentService.getList(
 				{type:'T',id:tobaccoValue,page:page||1,},
 				function(pageDTO,list){
-					console.log(pageDTO);
-					console.log(list);
 					if(page==-1){
 						pageNum=pageDTO.total;
 						showList(pageNum);
@@ -140,10 +139,10 @@
 						return;
 					}
 					for(var i=0,len=list.length || 0; i<len;i++){
-						str+="<li class='left clearfix' data-rno='"+list[i].commentId+"'>";
+						str+="<li class='left clearfix' data-commentid='"+list[i].commentId+"'>";
 						str+="	<div class='header'>";
 						str+="		<strong class='primary-font'>"+list[i].member.email+"</strong>";
-						str+="		<small class='pull-right text-muted'>"+list[i].cdate+"</small>";
+						str+="		<small class='pull-right text-muted'>"+commentService.displayTime(list[i].cdate)+"</small>";
 						str+="	</div>";
 						str+="	<p>"+list[i].content+"</p>";
 						str+="</li>";
@@ -153,6 +152,7 @@
 				}
 			);
 		}
+		//Comment list Page 출력
 		function showCommentPage(pageDTO){
 			
 			var str = "<ul class='pagination pull-right'>";
@@ -161,46 +161,73 @@
 				str+="<li class='page-item'><a class='page-link' href='"+(pageDTO.startPage-1)+"'>Previous</a></li>";
 			}
 			for(var i=pageDTO.startPage;i<=pageDTO.endPage;i++){
-				var active = pageNum== i ? "active" : "";
-				str+="<li class='page-item'><a class='page-link' href='"+i+"'>"+i+"</a></li>";
+				var active = pageNum == i ? "active" : "";
+				str+="<li class='page-item "+active+"'><a class='page-link' href='"+i+"'>"+i+"</a></li>";
 			}	
 			
 			if(pageDTO.next){
 				str+="<li class='page-item'><a class='page-link' href='"+(pageDTO.endPage+1)+"'>Next</a></li>";
 			}
 			str+="</ul>"
-			replyPageFooter.html(str);
+			commentPageFooter.html(str);
 		}
-		/*
-		var modal = $(".modal");
-		var modalInputReply = modal.find("input[name='reply']");
-		var modalInputReplyer = modal.find("input[name='replyer']");
-		var modalInputReplyDate = modal.find("input[name='replydate']");
 		
-		var modalModBtn = $("#modalModBtn");
-		var modalRemoveBtn = $("#modalRemoveBtn");
-		var modalRegisterBtn = $("#modalRegisterBtn");
+		var modal = $(".modal");  //Comment 처리용  modal
+		var modalInputContent= modal.find("input[name='content']");  //Comment 내용
+		var modalInputCommenter = modal.find("input[name='email']");
+		var modalInputCommentDate = modal.find("input[name='cdate']");
 		
-		$("#addReplyBtn").on("click",function(e){
+		var modalModBtn = $("#modalModBtn"); // Comment 변경
+		var modalRemoveBtn = $("#modalRemoveBtn"); // Comment 삭제
+		var modalRegisterBtn = $("#modalRegisterBtn"); //Comment 등록
+		var modalCloseBtn = $("#modalCloseBtn"); // Comment modal close
+		
+		
+		//Close 버튼 처리
+		modalCloseBtn.on("click",function(e){
+			$(".modal").modal("hide");
+		});
+		
+		//Comment 등록 Form 처리
+		$("#addCommentBtn").on("click",function(e){
 			modal.find("input").val("");
-			modalInputReplyDate.closest("div").hide();
 			modal.find("button[id !='modalCloseBtn']").hide();
 			
 			modalRegisterBtn.show();
-			
+			modalInputCommenter.closest("div").hide();
+			modalInputCommentDate.closest("div").hide();
 			$(".modal").modal("show");
 			
 		});
+		//Comment 등록
+		modalRegisterBtn.on("click",function(e){
+			var comment = {
+					content:modalInputContent.val(),
+					tobacco:{
+						tobaccoId:tobaccoValue
+					}
+			}
+			if(comment.content===""){
+				alert("입력이 필요합니다.");
+				return;
+			}
+			commentService.add(comment,function(result){
+				alert(result);
+				
+				modal.find("input").val("");
+				modal.modal("hide");
+				
+				showList(1);
+			})
+		});
 		$(".chat").on("click","li",function(e){
-			var rno = $(this).data("rno");
-			
-			replyService.get(rno,function(reply){
-				modalInputReply.val(reply.reply);
-				modalInputReplyer.val(reply.replyer);
-				modalInputReplyDate.val(
-						replyService.displayTime(reply.replydate)).
-						attr("readonly","readonly");
-				modal.data("rno",reply.rno);
+			var commentId = $(this).data("commentid");
+				commentService.get(commentId,function(comment){
+				modalInputContent.val(comment.content);
+				modalInputCommenter.val(comment.member.email);
+				modalInputCommentDate.val(commentService.displayTime(comment.cdate)).attr("readonly","readonly");
+				
+				modal.data("commentid",comment.commentId);
 				
 				modal.find("button[id != 'modalCloseBtn']").hide();
 				modalModBtn.show();
@@ -210,54 +237,34 @@
 			});
 		});
 		
-		modalRegisterBtn.on("click",function(e){
-			var reply = {
-				reply:modalInputReply.val(),
-				replyer:modalInputReplyer.val(),
-				bno:bnoValue
-			};
-			if(reply.reply===""){
-				alert("입력이 필요합니다.");
-				return;
-			}
-			replyService.add(reply,function(result){
-				alert(result);
-				
-				modal.find("input").val("");
-				modal.modal("hide");
-				
-				showList(1);
-				//showList(-1) 오래된 댓글을 먼저 출력할경우
-			})
-		});
-		modalModBtn.on("click",function(e){ 
-			var reply = {rno:modal.data("rno"),reply:modalInputReply.val()};
-			
-			replyService.update(reply,function(result){
-				alert(result);
-				modal.modal("hide");
-				showList(pageNum);
-			});
-		});
-		modalRemoveBtn.on("click",function(e){
-			var rno = modal.data("rno");
-			
-			replyService.remove(rno,function(result){
-				alert(result);
-				modal.modal("hide");
-				showList(pageNum);
-			})
-		});
-		
-		
-		replyPageFooter.on("click","li a",function(e){
+		//Comment 페이지 넘김
+		commentPageFooter.on("click","li a",function(e){
 			e.preventDefault();
 			
 			var targetPageNum = $(this).attr("href");
 			pageNum = targetPageNum;
 			showList(pageNum);
 		});
-		*/
+		
+		
+		modalModBtn.on("click",function(e){ 
+			var comment = {commentId:modal.data("commentid"),content:modalInputContent.val()};
+			
+			commentService.update(comment,function(result){
+				//alert(result);
+				modal.modal("hide");
+				showList(pageNum);
+			});
+		});
+		modalRemoveBtn.on("click",function(e){
+			var commentId = modal.data("commentid");
+			
+			commentService.remove(commentId,function(result){
+				//alert(result);
+				modal.modal("hide");
+				showList(pageNum);
+			})
+		});
 		
 	});
 </script>

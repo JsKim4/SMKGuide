@@ -11,15 +11,15 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label>Reply</label> <input class="form-control" name='reply'
+					<label>Commenter</label> <input class="form-control" name='email'
 						value='New Reply!!'>
 				</div>
 				<div class="form-group">
-					<label>Replyer</label> <input class="form-control" name='replyer'
+					<label>Content</label> <input class="form-control" name='content'
 						value='replyer'>
 				</div>
 				<div class="form-group">
-					<label>Reply Date</label> <input class="form-control" name='replydate'
+					<label>Comment Date</label> <input class="form-control" name='cdate'
 						value=''>
 				</div>
 			</div>

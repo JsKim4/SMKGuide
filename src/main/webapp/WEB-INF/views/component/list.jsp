@@ -85,6 +85,13 @@
 			var modalModBtn = $("#modalModBtn");
 			var modalRemoveBtn = $("#modalRemoveBtn");
 			var modalRegisterBtn = $("#modalRegisterBtn");
+			var modalCloseBtn = $("#modalCloseBtn"); // Comment modal close
+			
+			
+			//Close 버튼 처리
+			modalCloseBtn.on("click",function(e){
+				$(".modal").modal("hide");
+			});
 			
 			
 			

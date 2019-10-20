@@ -5,7 +5,6 @@ import org.kjs.domain.CommentVO;
 import org.kjs.domain.Criteria;
 import org.kjs.domain.MemberVO;
 import org.kjs.domain.PageDTO;
-import org.kjs.domain.TobaccoVO;
 import org.kjs.service.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,12 +37,10 @@ public class CommentController {
 	/*
 	 * create 와 modify는 requestBody로 vo를 받게 되는데 vo안에 있는 content field 만 사용함
 	 */
-	@PostMapping(value = "/{tobaccoId}/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> create(@RequestBody CommentVO vo, @PathVariable("tobaccoId") Long tobaccoId) {
-		TobaccoVO tobacco = new TobaccoVO(tobaccoId);
+	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<String> create(@RequestBody CommentVO vo) {
 		MemberVO member = new MemberVO();
 		member.setMemberId(1L);
-		vo.setTobacco(tobacco);
 		vo.setMember(member);
 		return service.register(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
