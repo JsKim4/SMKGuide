@@ -70,7 +70,13 @@
 		    <version>5.0.7.RELEASE</version>
 		</dependency>
 		
-		
+		<!-- image파일 판단용 -->
+		<!-- https://mvnrepository.com/artifact/jmimemagic/jmimemagic -->
+		<dependency>
+		    <groupId>jmimemagic</groupId>
+		    <artifactId>jmimemagic</artifactId>
+		    <version>0.1.2</version>
+		</dependency>
 		
 		
 		

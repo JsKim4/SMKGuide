@@ -15,7 +15,7 @@
 			<div class="panel-heading">Board register Page</div>
 			<!-- end panel-heading -->
 			<div class="panel-body">
-				<form role="form" action="./register" method="post">
+				<form role="form" action="./register" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Name</label> <input class="form-control" name='tobaccoName'>
 					</div>
@@ -63,6 +63,9 @@
 								<option value="${company.id}">${company.name }</option>
 							</c:forEach>
 						</select> 
+					</div>
+					<div class='form-group'>
+						<input type="file" name="uploadFile">
 					</div>
 					<div class='pull-right'>
 						<button type="submit" class="btn btn-default">Submit Button</button>

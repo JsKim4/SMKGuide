@@ -172,4 +172,8 @@
 		update tbl_tobacco set comment_cnt = comment_cnt + #{amount} where tobacco_id = #{tobaccoId}
 	</update>
 
+	<update id="updateProfileImg">
+		update tbl_tobacco set profile_img = #{uuid} where tobacco_id=#{tobaccoId}
+	</update>
+	
 </mapper>

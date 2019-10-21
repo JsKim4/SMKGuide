@@ -3,6 +3,7 @@ package org.kjs.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.kjs.domain.AttachVO;
 import org.kjs.domain.Criteria;
 import org.kjs.domain.TobaccoVO;
 
@@ -33,4 +34,6 @@ public interface TobaccoMapper {
 
 	
 	public void updateCommentCnt(@Param("tobaccoId") Long tobaccoId,@Param("amount") int amount);
+	
+	public void updateProfileImg(AttachVO vo);
 }
