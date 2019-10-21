@@ -29,6 +29,15 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	
+	<multipart-config>
+		<location>/</location>
+		<max-file-size>20971520</max-file-size> <!-- 20mb -->
+		<max-request-size>41943040</max-request-size>
+		<file-size-threshold>20971520</file-size-threshold>
+	</multipart-config>
+	
 	<!-- Encoding Filter -->
 	<filter>
 		<filter-name>encoding</filter-name>
@@ -38,6 +47,7 @@
 			<param-value>UTF-8</param-value>
 		</init-param>
 	</filter>
+	
 	<filter-mapping>
 		<filter-name>encoding</filter-name>
 		<servlet-name>appServlet</servlet-name>
