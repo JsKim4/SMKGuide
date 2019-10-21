@@ -15,8 +15,10 @@ public class TobaccoVO {		//담배
 	ComponentVO brand;			//브랜드
 	Double tar;					//타르 함유량
 	Double nicotine;			//니코틴 함유량
-	Double quantity;				//갯수
+	Double quantity;			//개수
 	Long price;					//가격
+	int commentCnt;				//comment 개수
+	
 	
 	public TobaccoVO() {
 		this(-1L);

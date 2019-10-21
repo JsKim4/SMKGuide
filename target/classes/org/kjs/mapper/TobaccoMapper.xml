@@ -39,6 +39,7 @@
 	   	<id property="nicotine" column="nicotine" />
 	   	<id property="quantity" column="amount" />
 	   	<id property="price" column="price" />
+	   	<id property="commentCnt" column="comment_cnt" />
 	   	<association property="country"  javaType="org.kjs.domain.ComponentVO" >
 	    	<result property="id"  column="country_id" />
 			<result property="name"  column="country_name" />
@@ -103,7 +104,8 @@
 		t.type_id as type_id,
 		tp.type_name as type_name,
 		t.brand_id as brand_id,
-		b.brand_name as brand_name
+		b.brand_name as brand_name,
+		t.comment_cnt
 
 		from tbl_tobacco as t
 		left join tbl_country as ct on (t.country_id =
@@ -126,7 +128,8 @@
 		t.type_id as type_id,
 		tp.type_name as type_name,
 		t.brand_id as brand_id,
-		b.brand_name as brand_name
+		b.brand_name as brand_name,
+		t.comment_cnt
 
 		from tbl_tobacco as t
 		left join tbl_country as ct on (t.country_id =
@@ -147,7 +150,8 @@
 		t.type_id as type_id,
 		tp.type_name as type_name,
 		t.brand_id as brand_id,
-		b.brand_name as brand_name
+		b.brand_name as brand_name,
+		t.comment_cnt
 
 		from tbl_tobacco as t
 		left join tbl_country as ct on (t.country_id =
@@ -164,5 +168,8 @@
 		select count(*) from tbl_tobacco as t where <include refid="criteria"></include> tobacco_id>0
 	</select>
 	
+	<update id="updateCommentCnt">
+		update tbl_tobacco set comment_cnt = comment_cnt + #{amount} where tobacco_id = #{tobaccoId}
+	</update>
 
 </mapper>

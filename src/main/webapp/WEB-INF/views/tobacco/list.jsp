@@ -34,7 +34,7 @@
 							<td><a class='move' href='<c:out value="${tobacco.tobaccoId}"/>'>
 									<c:out value="${tobacco.tobaccoId}" />
 							</a></td>
-							<td><c:out value="${tobacco.tobaccoName }" /></td>
+							<td><c:out value="${tobacco.tobaccoName }" /> [ <c:out value="${tobacco.commentCnt}" /> ]</td>
 							<td><c:out value="${tobacco.brand.name }" /></td>
 							<td><c:out value="${tobacco.quantity }" /></td>
 							<td><c:out value="${tobacco.price }" /></td>

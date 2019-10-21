@@ -2,6 +2,7 @@ package org.kjs.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.kjs.domain.Criteria;
 import org.kjs.domain.TobaccoVO;
 
@@ -29,4 +30,7 @@ public interface TobaccoMapper {
 
 	// °Ë»ö¿ë
 	public int getTotalCount(Criteria cri);
+
+	
+	public void updateCommentCnt(@Param("tobaccoId") Long tobaccoId,@Param("amount") int amount);
 }

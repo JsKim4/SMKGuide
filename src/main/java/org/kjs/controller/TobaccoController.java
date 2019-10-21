@@ -25,7 +25,7 @@ import lombok.AllArgsConstructor;
 public class TobaccoController {
 	TobaccoService service;
 	ComponentService CS;
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 	public void RM(Model model) {
 		model.addAttribute("brandList", CS.getRegistList(new ComponentVO("brand")));
 		model.addAttribute("companyList", CS.getRegistList(new ComponentVO("company")));
@@ -38,6 +38,7 @@ public class TobaccoController {
 		cri.setStartIndex();
 		int total = service.getTotalCount(cri);
 		RM(model);
+		log.info(service.getList(cri)+"");
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
@@ -74,7 +75,7 @@ public class TobaccoController {
 	@PostMapping("/modify")
 	public String modify(TobaccoVO vo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		if (service.modify(vo)) {
-			logger.info("modify : "+vo);
+			log.info("modify : "+vo);
 			rttr.addFlashAttribute("result", "success");
 		}
 		return "redirect:/tobacco/list" + cri.getListLinkTobacco();
