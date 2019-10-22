@@ -10,5 +10,10 @@ public class AttachVO {
 	
 	private Long tobaccoId;
 	
-	
+	public String getAttachFileName() {
+		if(uuid!=null&&uuid.length()>0) {
+			return this.uploadPath.replace("\\", "/")+"/"+this.uuid+"_"+this.fileName;
+		}
+		return "";
+	}
 }

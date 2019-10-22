@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Setter;
@@ -35,8 +36,12 @@ public class AttachServiceImpl implements AttachService {
 	
 	
 	@Override
+	@Transactional
 	public String register(MultipartFile file,Long tobaccoId) {
-		String uploadFolder = "C:\\upload";
+		File f = new File("file");
+		File rootPath = f.getAbsoluteFile();
+		String uploadFolder = rootPath.getPath();
+		//String uploadFolder ="C:\\upload\\";
 		String uploadFolderPath = getFolder();
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		if (uploadPath.exists() == false) {
@@ -50,9 +55,9 @@ public class AttachServiceImpl implements AttachService {
 		uploadFileName = uuid.toString() + "_" + uploadFileName;
 		try {
 			File saveFile = new File(uploadPath, uploadFileName);
-			if(!checkImageType(saveFile)) {
+			/*if(!checkImageType(saveFile)) {
 				return null;
-			}
+			}*/
 			file.transferTo(saveFile);
 
 			vo.setUploadPath(uploadFolderPath);

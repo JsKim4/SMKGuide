@@ -56,6 +56,15 @@
 	    	<result property="id"  column="brand_id" />
 			<result property="name"  column="brand_name" />
 		</association>
+		<association property="attach"  javaType="org.kjs.domain.AttachVO" >
+	    	<result property="uuid"  column="uuid" />
+			<result property="uploadPath"  column="upload_path" />
+			<result property="fileName"  column="file_name" />
+			<result property="tobaccoId"  column="tobacco_id" />
+		</association>
+		
+		
+		
 	</resultMap>
 	
 	<insert id="insert">
@@ -105,8 +114,11 @@
 		tp.type_name as type_name,
 		t.brand_id as brand_id,
 		b.brand_name as brand_name,
-		t.comment_cnt
-
+		t.comment_cnt,
+		a.uuid as uuid,
+		a.upload_path as upload_path,
+		a.file_name as file_name
+		
 		from tbl_tobacco as t
 		left join tbl_country as ct on (t.country_id =
 		ct.country_id)
@@ -114,8 +126,8 @@
 		cm.company_id)
 		left join tbl_brand as b on (t.brand_id = b.brand_id)
 		left join tbl_type as tp on (t.type_id = tp.type_id)
-
-		where tobacco_id=#{tobaccoId}
+		left join tbl_attach as a on (t.profile_img = a.uuid)
+		where t.tobacco_id=#{tobaccoId}
 	</select>
 
 	<select id="getList" resultMap="Tobacco">
@@ -129,8 +141,11 @@
 		tp.type_name as type_name,
 		t.brand_id as brand_id,
 		b.brand_name as brand_name,
-		t.comment_cnt
-
+		t.comment_cnt,
+		a.uuid as uuid,
+		a.upload_path as upload_path,
+		a.file_name as file_name
+		
 		from tbl_tobacco as t
 		left join tbl_country as ct on (t.country_id =
 		ct.country_id)
@@ -138,6 +153,7 @@
 		cm.company_id)
 		left join tbl_brand as b on (t.brand_id = b.brand_id)
 		left join tbl_type as tp on (t.type_id = tp.type_id)
+		left join tbl_attach as a on (t.profile_img = a.uuid)
 	</select>
 	
 	<select id="getListWithPage" resultMap="Tobacco">
@@ -151,8 +167,11 @@
 		tp.type_name as type_name,
 		t.brand_id as brand_id,
 		b.brand_name as brand_name,
-		t.comment_cnt
-
+		t.comment_cnt,
+		a.uuid as uuid,
+		a.upload_path as upload_path,
+		a.file_name as file_name
+		
 		from tbl_tobacco as t
 		left join tbl_country as ct on (t.country_id =
 		ct.country_id)
@@ -160,8 +179,9 @@
 		cm.company_id)
 		left join tbl_brand as b on (t.brand_id = b.brand_id)
 		left join tbl_type as tp on (t.type_id = tp.type_id)
-		where <include refid="criteria"></include> tobacco_id>0
-		order by tobacco_id desc limit #{startIndex},#{amount}
+		left join tbl_attach as a on (t.profile_img = a.uuid)
+		where <include refid="criteria"></include> t.tobacco_id>0
+		order by t.tobacco_id desc limit #{startIndex},#{amount}
 	</select>
 	
 	<select id="getTotalCount" resultType="int">

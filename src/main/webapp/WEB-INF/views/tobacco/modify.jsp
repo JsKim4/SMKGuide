@@ -15,7 +15,7 @@
 			<div class="panel-heading">Tobacco Modify</div>
 			<!-- end panel-heading -->
 			<div class="panel-body">
-				<form role="form" action="./modify" method="post">
+				<form role="form" action="./modify" method="post"  enctype="multipart/form-data">
 					<input type="hidden" name='pageNum'  value='<c:out value="${cri.pageNum }"/>'>
 					<input type="hidden" name='amount'  value='<c:out value="${cri.amount }"/>'>
 					<input type='hidden' name='type' value='${cri.type}'>
@@ -84,6 +84,9 @@
 								<option value="${type.id}" <c:out value="${tobacco.type.id==type.id?'selected':''}"/>>${type.name }</option>
 							</c:forEach>
 						</select>
+					</div>
+					<div class='form-group'>
+						<input type="file" name="uploadFile" value="${tobacco.attach.fileName}">
 					</div>
 					<div class="col-lg-12">
 						<button type="submit" data-oper='modify' class="btn btn-default">

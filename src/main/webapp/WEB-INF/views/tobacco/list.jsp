@@ -22,15 +22,18 @@
 				<table class="table table-striped table-bordered table hover">
 					<thead>
 						<tr>
+							<th>Img</th>
 							<th>#번호</th>
 							<th>담배명</th>
 							<th>브랜드명</th>
 							<th>수량</th>
 							<th>가격</th>
+							
 						</tr>
 					</thead>
 					<c:forEach items="${list}" var="tobacco">
 						<tr>
+							<td style="width:50px;height:50px"><img style="width:50px;height:50px" src='/display?fileName=${tobacco.attach.attachFileName}'></td>
 							<td><a class='move' href='<c:out value="${tobacco.tobaccoId}"/>'>
 									<c:out value="${tobacco.tobaccoId}" />
 							</a></td>
