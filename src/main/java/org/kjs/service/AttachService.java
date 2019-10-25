@@ -9,4 +9,6 @@ public interface AttachService {
 	public String register(MultipartFile file,Long tobaccoId);
 	
 	public void remove(String uuid);
+	
+	public void upadte(MultipartFile file,Long tobaccoId);
 }

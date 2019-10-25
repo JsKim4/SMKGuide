@@ -79,8 +79,9 @@ public class TobaccoController {
 	@PostMapping("/modify")
 	public String modify(TobaccoVO vo, @ModelAttribute("cri") Criteria cri,MultipartFile uploadFile, RedirectAttributes rttr) {
 		if (service.modify(vo)) {
-			if(uploadFile.getOriginalFilename().trim().length()>0)
-				attachService.register(uploadFile, vo.getTobaccoId());
+			if(uploadFile.getOriginalFilename().trim().length()>0) {
+				attachService.upadte(uploadFile, vo.getTobaccoId());
+			}
 			rttr.addFlashAttribute("result", "success");
 		}
 		return "redirect:/tobacco/list" + cri.getListLinkTobacco();
@@ -89,7 +90,9 @@ public class TobaccoController {
 	@PostMapping("/remove")
 	public String remove(@RequestParam("tobaccoId") Long tobaccoId, @ModelAttribute("cri") Criteria cri,
 			RedirectAttributes rttr) {
+		String uuid = service.get(tobaccoId).getAttach().getUuid();
 		if (service.remove(tobaccoId)) {
+			attachService.remove(uuid);
 			rttr.addFlashAttribute("result", "success");
 		}
 		return "redirect:/tobacco/list" + cri.getListLinkTobacco();

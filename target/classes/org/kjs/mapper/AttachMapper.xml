@@ -8,6 +8,8 @@
 		values(#{uuid},#{uploadPath},#{fileName},#{tobaccoId})
 	</insert>
 	
+	
+	
 	<delete id="delete">
 		delete from tbl_attach where uuid = #{uuid}
 	</delete>

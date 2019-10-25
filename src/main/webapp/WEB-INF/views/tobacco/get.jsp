@@ -22,9 +22,10 @@
 				<div class="col-lg-11 form-group">
 				 <input class="form-control" name='title' value='<c:out value="${tobacco.tobaccoName }"/>' readonly="readonly">
 				</div>
-				<div class="col-lg-3">
+				<div class="col-lg-4" style="text-align:center;">
+					<img style="max-height:270px;max-width:270px" src='/display?fileName=${tobacco.attach.attachFileName}'>
 				</div>
-				<div class="col-lg-9">
+				<div class="col-lg-8">
 					<div class="form-group">
 						<label>nicotine</label>
 						<input class="form-control" name='nicotine' value='<c:out value="${tobacco.nicotine }"/>' readonly="readonly">

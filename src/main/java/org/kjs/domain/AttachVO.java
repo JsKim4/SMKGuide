@@ -16,4 +16,11 @@ public class AttachVO {
 		}
 		return "";
 	}
+	
+	public String getThumbnailFileName() {
+		if(uuid!=null&&uuid.length()>0) {
+			return this.uploadPath.replace("\\", "/")+"/S_"+this.uuid+"_"+this.fileName;
+		}
+		return "";
+	}
 }
