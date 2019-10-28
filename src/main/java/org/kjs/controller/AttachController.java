@@ -24,10 +24,10 @@ public class AttachController {
 	@GetMapping("/display")
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(String fileName) {
-		//File f = new File("file");
-		//File rootPath = f.getAbsoluteFile();
-		//File file = new File(rootPath.getPath()+"/"+ fileName);
-		File file = new File("C:\\upload\\" + fileName);
+		File f = new File("file");
+		File rootPath = f.getAbsoluteFile();
+		File file = new File(rootPath.getPath()+"/"+ fileName);
+		//File file = new File("C:\\upload\\" + fileName);
 		if(fileName==null||fileName.length()<1)
 			return null;
 

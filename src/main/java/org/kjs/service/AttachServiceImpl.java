@@ -46,8 +46,8 @@ public class AttachServiceImpl implements AttachService {
 	public String register(MultipartFile file, Long tobaccoId) {
 		File f = new File("file");
 		File rootPath = f.getAbsoluteFile();
-		// String uploadFolder = rootPath.getPath();
-		String uploadFolder = "C:\\upload\\";
+		 String uploadFolder = rootPath.getPath();
+		//String uploadFolder = "C:\\upload\\";
 		String uploadFolderPath = getFolder();
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		if (uploadPath.exists() == false) {
@@ -88,7 +88,10 @@ public class AttachServiceImpl implements AttachService {
 	@Transactional
 	@Override
 	public void remove(String uuid) {
-		String uploadFolder = "C:\\upload\\";
+		File f = new File("file");
+		File rootPath = f.getAbsoluteFile();
+		 String uploadFolder = rootPath.getPath();
+		//String uploadFolder = "C:\\upload\\";
 		AttachVO vo = mapper.get(uuid);
 		if (vo != null) {
 			String path = uploadFolder+vo.getUploadPath() + "\\" + vo.getUuid() + "_" + vo.getFileName();
