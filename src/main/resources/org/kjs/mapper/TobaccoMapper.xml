@@ -25,11 +25,16 @@
 						<when test="type == 'M'.toString() and mId!=null and mId > 0">
 							t.company_id = #{mId}
 						</when>
+						<when test="!keyword.equals('') and keyword!=null">
+							t.tobacco_name LIKE "%${keyword}%"
+						</when>
 					</choose>
+					
 				</trim>
 			</foreach>
 		</trim>
 	</sql>
+	
 	
 	<resultMap id="Tobacco" type="org.kjs.domain.TobaccoVO">
 		<id property="tobaccoId" column="tobacco_id" />
