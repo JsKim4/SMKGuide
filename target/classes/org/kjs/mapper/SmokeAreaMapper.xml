@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kjs.mapper.SmokeAreaMapper">
+	<insert id="insert">
+		<selectKey resultType="long" keyProperty="areaId"
+			order="AFTER">
+			SELECT MAX(area_id) FROM tbl_area
+		</selectKey>
+		insert into tbl_area(area_name,latitude,longitude)
+		values(#{areaName},#{latitude},#{longitude})
+	</insert>
+	
+	
+	<delete id="delete">
+		delete from tbl_area where area_id = #{areaId}
+	</delete>
+	
+	
+	<select id="get" resultType="org.kjs.domain.SmokeAreaVO">
+		select * from tbl_area where area_id = #{areaId}
+	</select>
+	
+	<select id="listSmokeArea" resultType="org.kjs.domain.SmokeAreaVO">
+		select * from tbl_area
+	</select>
+	
+</mapper>

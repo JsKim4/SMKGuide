@@ -10,8 +10,8 @@
 	
 	<insert id="insertSelectKey">
 		<selectKey resultType="long" keyProperty="brandId"
-			order="BEFORE">
-			SELECT MAX(${vo.type}_id)+1 FROM tbl_${vo.type}
+			order="AFTER">
+			SELECT MAX(${vo.type}_id) FROM tbl_${vo.type}
 		</selectKey>
 		insert into tbl_${vo.type}(${vo.type}_name) 
 		values(#{vo.name})

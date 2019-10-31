@@ -80,8 +80,8 @@
 	
 	<insert id="insertSelectKey">
 		<selectKey resultType="long" keyProperty="tobaccoId"
-			order="BEFORE">
-			SELECT MAX(tobacco_id)+1 FROM tbl_tobacco
+			order="AFTER">
+			SELECT MAX(tobacco_id) FROM tbl_tobacco
 		</selectKey>
 		insert into
 		tbl_tobacco(tobacco_name,country_id,company_id,type_id,brand_id,tar,nicotine,amount,price)

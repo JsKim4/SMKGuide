@@ -6,6 +6,8 @@ var commentService =(function(){
 			contentType : "application/json; charset=utf-8", // 데이터 전송 타입 지정 json형식 charset = utf-8
 			success : function(result,status,xhr){
 				if(callback){
+					console.log(result);
+					console.log(result.list);
 					callback(result.commentPage,result.list);
 				}
 			},

@@ -114,7 +114,7 @@
 </div>
 <!-- ./end row -->
 <%@include file="../includes/footer.jsp"%>
-<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/comment.js?ver=6"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/comment.js?ver=8"></script>
 <!-- reply 관련 script -->
 <script>
 	$(document).ready(function() {
@@ -130,6 +130,7 @@
 			commentService.getList(
 				{type:'T',id:tobaccoValue,page:page||1,},
 				function(pageDTO,list){
+					console.log(list);
 					if(page==-1){
 						pageNum=pageDTO.total;
 						showList(pageNum);

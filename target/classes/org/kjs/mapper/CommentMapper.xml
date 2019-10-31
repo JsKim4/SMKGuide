@@ -43,8 +43,8 @@
 	
 	<insert id="insertSelectKey">
 		<selectKey resultType="long" keyProperty="commentId"
-			order="BEFORE">
-			SELECT MAX(comment_id)+1 FROM tbl_comment
+			order="AFTER">
+			SELECT MAX(comment_id) FROM tbl_comment
 		</selectKey>
 		insert into
 		tbl_comment(tobacco_id,member_id,content)

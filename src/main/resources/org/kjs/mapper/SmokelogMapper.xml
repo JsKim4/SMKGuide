@@ -39,8 +39,8 @@
 	
 	<insert id="insertSelectKey">
 		<selectKey resultType="long" keyProperty="smokelogId"
-			order="BEFORE">
-			SELECT MAX(smokelog_id)+1 FROM tbl_smokelog
+			order="AFTER">
+			SELECT MAX(smokelog_id) FROM tbl_smokelog
 		</selectKey>
 		insert into
 		tbl_smokelog(tobacco_id,member_id)
