@@ -15,7 +15,7 @@
 						value='<c:out value =""/>' readonly='readonly'>
 				</div>
 				<div class="form-group">
-					<label>Name</label> <input class="form-control" name='areaNme'
+					<label>Name</label> <input class="form-control" name='areaName'
 						value='asdasd'>
 				</div>
 				<div class="form-group">

@@ -227,7 +227,7 @@
 								</span>
 							</div> 
 						</li>
-						<li><a href="/area/map"><i class="fa fa-dashboard fa-fw"></i>
+						<li><a href="/map/index"><i class="fa fa-dashboard fa-fw"></i>
 								Smoking Area</a></li>
 						<li><a href="#"><i class="fa fa-wrench fa-fw"></i> Component
 						List<span class="fa arrow"></span></a>

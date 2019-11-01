@@ -36,13 +36,23 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/area.js?ver=10"></script>
 <script>
 $(document).ready(function() {
+	
+		var modal = $(".modal");  
+		var modalRemoveBtn = $("#modalRemoveBtn"); 
+		var modalRegisterBtn = $("#modalRegisterBtn"); 
+		var modalCloseBtn = $("#modalCloseBtn"); 
+		
+		var inputName = modal.find("input[name='areaName']");
+		var inputLatitude = modal.find("input[name='latitude']");
+		var inputLongitude = modal.find("input[name='longitude']");
 		var container = document.getElementById('map');
+		
 		var options = {
 			center: new kakao.maps.LatLng(37.562018, 126.980833),
 			level: 13
 		};
 		var map = new kakao.maps.Map(container, options);
-		var marker  = new Array();
+		var positions  = new Array();
 		showList();
 		//Comment list 출력
 		function showList(){	
@@ -51,44 +61,56 @@ $(document).ready(function() {
 					console.log(list);
 					console.log(list.length);
 					for(var i=0,len= list.length||0 ;i<len;i++ ){
-						var markerPosition =  new kakao.maps.LatLng(list[i].latitude,list[i].longitude);
-						console.log(i,len);
-						console.log(markerPosition);
-						marker[i]= new kakao.maps.Marker({
-						    position: markerPosition
-						});	
-						marker[i].setMap(map);
+						var content ="<div>"+list[i].areaName+"</div>"+
+									"<div>"+list[i].latitude+" "+list[i].longitude+"</div>";
+						positions.push({
+							 content: content,
+							 clickContent : modal.clone(),
+						     latlng: new kakao.maps.LatLng(list[i].latitude, list[i].longitude)
+						});
+						console.log(positions[i].content);
+						var marker = new kakao.maps.Marker({
+						 	map: map, // 마커를 표시할 지도
+						    position: positions[i].latlng // 마커의 위치
+						});
+						var infowindow = new kakao.maps.InfoWindow({
+					        content: positions[i].content // 인포윈도우에 표시할 내용
+					    });
+						kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+						kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+						kakao.maps.event.addListener(marker, 'click',mouseClickListener(list[i].areaId))
+					}
+					function mouseClickListener(id){
+						return function(){
+							areaService.get(id,function(area){
+								inputName.val(area.areaName).attr("readonly","readonly");
+								inputLatitude.val(area.latitude).attr("readonly","readonly");
+								inputLongitude.val(area.longitude).attr("readonly","readonly");
+								
+								modal.find("button[id != 'modalCloseBtn']").hide();
+								modalRemoveBtn.show();
+								
+								console.log(area);
+								$(".modal").modal("show");
+							});
+						}
+					}
+					function makeOverListener(map, marker, infowindow) {
+					    return function() {
+					        infowindow.open(map, marker);
+					    };
+					}
+
+					// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+					function makeOutListener(infowindow) {
+					    return function() {
+					        infowindow.close();
+					    };
 					}
 				}
 			);
 		}
-		
-		
-		
-		
-		// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-	///	var iwContent = '<div style="padding:5px;">Hello World!</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-		//    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-		// 인포윈도우를 생성합니다
-	//	var infowindow = new kakao.maps.InfoWindow({
-	//	    content : iwContent,
-	//	    removable : iwRemoveable
-		//});
-		// 마커에 클릭이벤트를 등록합니다
-	///	kakao.maps.event.addListener(marker, 'click', function() {
-		      // 마커 위에 인포윈도우를 표시합니다
-		//      infowindow.open(map, marker);  
-	//	});
-		
-		
-		var modal = $(".modal");  
-		var modalRemoveBtn = $("#modalRemoveBtn"); 
-		var modalRegisterBtn = $("#modalRegisterBtn"); 
-		var modalCloseBtn = $("#modalCloseBtn"); 
-		
-		var inputName = modal.find("input[name='name']");
-		var inputLatitude = modal.find("input[name='latitude']");
-		var inputLongitude = modal.find("input[name='longitude']");
+
 		//Close 버튼 처리
 		modalCloseBtn.on("click",function(e){
 			$(".modal").modal("hide");
@@ -96,6 +118,9 @@ $(document).ready(function() {
 		
 		$("#regBtn").on("click",function(e){
 			modal.find("input").val("");
+			inputName.removeAttr("readonly");
+			inputLatitude.removeAttr("readonly");
+			inputLongitude.removeAttr("readonly");
 			
 			modalRegisterBtn.show();
 			$(".modal").modal("show");
@@ -113,7 +138,6 @@ $(document).ready(function() {
 				return;
 			}
 			areaService.add(area,function(result){
-				
 				modal.find("input").val("");
 				modal.modal("hide");
 				showList();
