@@ -29,7 +29,7 @@ public class MobileSmokeAreaController {
 	@GetMapping(value="/list", produces = {MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<List<SmokeAreaVO>> list() {
-		return new ResponseEntity<>(tempService.listSmokeArea(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getListSmokeArea(),HttpStatus.OK);
 	}
 	
 }

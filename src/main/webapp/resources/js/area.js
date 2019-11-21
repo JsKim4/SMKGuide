@@ -37,6 +37,7 @@ var areaService =(function(){
 		});
 	}
 	function remove(areaId,callback,error){
+		console.log(areaId);
 		$.ajax({
 			type:'delete',
 			url:'/map/'+areaId,

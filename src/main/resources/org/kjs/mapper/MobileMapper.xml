@@ -104,4 +104,7 @@
 		select ${vo.type}_id as id, ${vo.type}_name as name from tbl_${vo.type} where ${vo.type}_id<![CDATA[ > 0]]>
 	</select>
 	
+	<select id="getListSmokeArea" resultType="org.kjs.domain.SmokeAreaVO">
+		select * from tbl_area
+	</select>
 </mapper>

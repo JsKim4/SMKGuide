@@ -11,7 +11,7 @@
 			</div>
 			<div class="modal-body">
 			<div class="form-group">
-					<label>ID</label> <input class="form-control" name='id'
+					<label>ID</label> <input class="form-control" name='areaId'
 						value='<c:out value =""/>' readonly='readonly'>
 				</div>
 				<div class="form-group">

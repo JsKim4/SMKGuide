@@ -46,6 +46,8 @@ public class SmokeAreaController {
 
 	@DeleteMapping(value = "/{id}", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> remove(@PathVariable("id") Long id) {
+		logger.info("delete function" + id);
+		service.remove(id);
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 }

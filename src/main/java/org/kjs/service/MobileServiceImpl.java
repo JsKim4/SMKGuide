@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.kjs.domain.ComponentVO;
 import org.kjs.domain.Criteria;
+import org.kjs.domain.SmokeAreaVO;
 import org.kjs.domain.TobaccoVO;
 import org.kjs.mapper.MobileMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,4 +29,10 @@ public class MobileServiceImpl implements MobileService {
 		return mapper.getListComponent(vo);
 	}
 
+	@Override
+	public List<SmokeAreaVO> getListSmokeArea() {
+		// TODO Auto-generated method stub
+		return mapper.getListSmokeArea();
+	}
+	
 }

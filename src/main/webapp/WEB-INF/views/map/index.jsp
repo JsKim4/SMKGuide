@@ -33,7 +33,7 @@
 <!-- /.row -->
 <%@include file="../includes/footer.jsp"%>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=002bb9e05de642c46d033331bdd7d5ab"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/area.js?ver=10"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/area.js?ver=11"></script>
 <script>
 $(document).ready(function() {
 	
@@ -42,6 +42,8 @@ $(document).ready(function() {
 		var modalRegisterBtn = $("#modalRegisterBtn"); 
 		var modalCloseBtn = $("#modalCloseBtn"); 
 		
+		
+		var inputId = modal.find("input[name='areaId']");
 		var inputName = modal.find("input[name='areaName']");
 		var inputLatitude = modal.find("input[name='latitude']");
 		var inputLongitude = modal.find("input[name='longitude']");
@@ -83,6 +85,7 @@ $(document).ready(function() {
 					function mouseClickListener(id){
 						return function(){
 							areaService.get(id,function(area){
+								inputId.val(area.areaId).attr("readonly","readonly");
 								inputName.val(area.areaName).attr("readonly","readonly");
 								inputLatitude.val(area.latitude).attr("readonly","readonly");
 								inputLongitude.val(area.longitude).attr("readonly","readonly");
@@ -142,6 +145,13 @@ $(document).ready(function() {
 				modal.modal("hide");
 				showList();
 			})
+		});
+		modalRemoveBtn.on("click",function(e){
+			areaService.remove(inputId.val(),function(result){
+				modal.find("input").val("");
+				modal.modal("hide");
+				showList();
+			});
 		});
 });
 </script>
