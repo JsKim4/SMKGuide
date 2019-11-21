@@ -13,7 +13,7 @@ public interface MemberMapper {
 	public int update(MemberVO vo);
 	
 	// 로그인 --> *이메일 + 비밀번호*
-	public MemberVO get(MemberVO vo);
+	public MemberVO get(String email);
 	
 	//email to id
 	public Integer getIdByEmail(String email);

@@ -10,7 +10,7 @@ public interface MemberService {
 
 	public int modify(MemberVO vo);
 
-	public MemberVO login(MemberVO vo);
+	public MemberVO login(String email);
 
 	public Integer getIdByEmail(String email);
 

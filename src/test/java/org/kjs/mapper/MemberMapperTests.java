@@ -40,7 +40,6 @@ public class MemberMapperTests {
 		MemberVO vo = new MemberVO();
 		vo.setEmail("insertTest@test");
 		vo.setPassword("0000");
-		vo = mapper.get(vo);
 		log.info(vo);
 	}
 
@@ -49,7 +48,6 @@ public class MemberMapperTests {
 		MemberVO vo = new MemberVO();
 		vo.setEmail("insertTest@test");
 		vo.setPassword("1234");
-		vo = mapper.get(vo);
 		vo.setConfirmPassword("0000");
 		vo.setMemberName("updateTest");
 		mapper.update(vo);
@@ -60,7 +58,6 @@ public class MemberMapperTests {
 		MemberVO vo = new MemberVO();
 		vo.setEmail("insertTest@test");
 		vo.setPassword("0000");
-		vo = mapper.get(vo);
 		mapper.delete(vo);
 	}
 

@@ -42,6 +42,8 @@
 					data-toggle="dropdown" href="#"> <i
 						class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
 				</a>
+				<a href="/member/register">register</a>
+				<a href="/member/login">login</a>
 					<ul class="dropdown-menu dropdown-messages">
 						<li><a href="#">
 								<div>

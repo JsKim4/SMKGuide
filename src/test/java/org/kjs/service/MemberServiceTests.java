@@ -44,7 +44,6 @@ public class MemberServiceTests {
 		MemberVO vo = new MemberVO();
 		vo.setEmail("insertTest1@test");
 		vo.setPassword("0000");
-		vo = service.login(vo);
 		log.info(vo);
 	}
 
@@ -53,7 +52,6 @@ public class MemberServiceTests {
 		MemberVO vo = new MemberVO();
 		vo.setEmail("insertTest1@test");
 		vo.setPassword("0000");
-		vo = service.login(vo);
 		vo.setConfirmPassword("1234");
 		vo.setMemberName("updateTest");
 		service.modify(vo);
@@ -64,7 +62,6 @@ public class MemberServiceTests {
 		MemberVO vo = new MemberVO();
 		vo.setEmail("insertTest1@test");
 		vo.setPassword("0000");
-		vo = service.login(vo);
 		service.leave(vo);
 	}
 

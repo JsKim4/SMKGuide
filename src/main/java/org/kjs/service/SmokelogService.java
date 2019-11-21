@@ -17,5 +17,7 @@ public interface SmokelogService {
 	public List<SmokelogVO> getList(Criteria cri);
 	
 	public int getTotalCount(Criteria cri);
+	
+
 
 }
