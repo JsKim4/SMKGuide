@@ -42,8 +42,6 @@
 					data-toggle="dropdown" href="#"> <i
 						class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
 				</a>
-				<a href="/member/register">register</a>
-				<a href="/member/login">login</a>
 					<ul class="dropdown-menu dropdown-messages">
 						<li><a href="#">
 								<div>
@@ -243,7 +241,13 @@
 						<li><a href="/tobacco/list"><i class="fa fa-table fa-fw"></i>
 								Tobacco List</a></li>
 						<li><a href="/misc/info"><i class="fa fa-edit fa-fw"></i>
-								Info</a></li>
+								Info<span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level">
+								<li><a href="/misc/notice/list">Notice</a></li>
+								<li><a href="/misc/news/list">NEWS</a></li>
+								<li><a href="/misc/info/list">Info</a></li>
+							</ul> <!-- /.nav-second-level -->
+						</li>
 					</ul>
 					<!-- /#side-menu -->
 				</div>

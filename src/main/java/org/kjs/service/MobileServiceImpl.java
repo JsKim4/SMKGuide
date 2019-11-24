@@ -2,6 +2,7 @@ package org.kjs.service;
 
 import java.util.List;
 
+import org.kjs.domain.CommentVO;
 import org.kjs.domain.ComponentVO;
 import org.kjs.domain.Criteria;
 import org.kjs.domain.SmokeAreaVO;
@@ -18,9 +19,9 @@ public class MobileServiceImpl implements MobileService {
 	MobileMapper mapper;
 	
 	@Override
-	public List<TobaccoVO> getListTobacco(Criteria cri) {
+	public List<TobaccoVO> getListTobacco() {
 		// TODO Auto-generated method stub
-		return mapper.getListTobacco(cri);
+		return mapper.getListTobacco();
 	}
 
 	@Override
@@ -34,5 +35,19 @@ public class MobileServiceImpl implements MobileService {
 		// TODO Auto-generated method stub
 		return mapper.getListSmokeArea();
 	}
+
+	@Override
+	public List<CommentVO> getListCommentByTobaccoWithPage(Criteria cri) {
+		// TODO Auto-generated method stub
+		return mapper.getListCommnetByTobaccoIdWithPage(cri);
+	}
+
+	@Override
+	public int getCommentTotalCount(Criteria cri) {
+		// TODO Auto-generated method stub
+		return mapper.getCommentTotalCount(cri);
+	}
+	
+	
 	
 }

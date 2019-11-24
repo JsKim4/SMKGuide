@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kjs.mapper.InfoMapper">
+
+	<insert id="insert">
+		insert into tbl_info(title,content,name,board)
+		values(#{vo.title},#{vo.content},#{vo.name},#{vo.board})
+	</insert>
+
+	<delete id="delete">
+		delete from tbl_info where info_id =
+		#{vo.infoId}
+	</delete>
+
+	<update id="update">
+		update tbl_info set
+		name=#{vo.name},title=#{vo.title},content=#{vo.content}
+		where info_id =
+		#{vo.infoId}
+	</update>
+
+	<select id="get" resultType="org.kjs.domain.InfoVO">
+		select
+		info_id,name,content,title,cdate
+		from tbl_info
+		where
+		info_id=#{vo.infoId} 
+	</select>
+
+	<select id="getList" resultType="org.kjs.domain.InfoVO">
+		select info_id, name, title, cdate from
+		tbl_info where info_id<![CDATA[ > 0]]> and board=#{cri.type}
+	</select>
+
+	<select id="getListWithPage"
+		resultType="org.kjs.domain.InfoVO">
+		select info_id, name, title, cdate from
+		tbl_info where info_id<![CDATA[ > 0]]>
+		and board=#{cri.type}
+		order by info_id
+		desc limit #{cri.startIndex},#{cri.amount}
+	</select>
+
+	<select id="getTotalCount" resultType="int">
+		select count(*) from
+		tbl_info where
+		info_id > 0 and board=#{cri.type}
+	</select>
+
+</mapper>

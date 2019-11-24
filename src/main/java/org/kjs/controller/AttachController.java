@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import org.kjs.service.AttachService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,8 @@ import lombok.AllArgsConstructor;
 public class AttachController {
 	AttachService attachService;
 	
-
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@GetMapping("/display")
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(String fileName) {
@@ -38,7 +41,7 @@ public class AttachController {
 			header.add("Content-type", Files.probeContentType(file.toPath()));
 			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.debug("No Such Image");
 		}
 		return result;
 	}
