@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +34,7 @@ public class SmokeAreaController {
 	public ResponseEntity<List<SmokeAreaVO>> getList(){
 		return new ResponseEntity<>(service.listSmokeArea(),HttpStatus.OK);
 	}
-	
+	@Secured({"ROLE_ADMIN","ROLE_MANAGE"})
 	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<SmokeAreaVO> create(@RequestBody SmokeAreaVO vo){
 		service.register(vo);
@@ -43,7 +44,7 @@ public class SmokeAreaController {
 	public ResponseEntity<SmokeAreaVO> get(@PathVariable("id") Long id) {
 		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
-
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping(value = "/{id}", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> remove(@PathVariable("id") Long id) {
 		logger.info("delete function" + id);

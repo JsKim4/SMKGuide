@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
@@ -18,29 +19,30 @@
 			<!-- end panel-heading -->
 			<div class="panel-body">
 				<form action="./register" method="post">
-				  <sec:csrfInput />
+					<sec:csrfInput />
 					<div class="form-group">
-						<label>email</label> 
-						<input class="form-control" name='email'>
+						<label>email</label> <input class="form-control"
+							placeholder="E-mail" name="email" type="email" autofocus>
 					</div>
 					<div class="form-group">
-						<label>password</label> 
-						<input class="form-control" name='password'>
+						<label>password</label> <input class="form-control"
+							placeholder="Password" name="password" type="password" value="">
 					</div>
 					<div class="form-group">
-						<label>name</label> 
-						<input class="form-control" name='memberName'>
+						<label>name</label> <input class="form-control" placeholder="Name"
+							name='memberName'>
 					</div>
 					<div class="form-group">
-						<label>phone</label> 
-						<input class="form-control" name='telephone'>
+						<label>phone</label> <input class="form-control"
+							placeholder="Phone Number" name='telephone'>
 					</div>
 					<div class="form-group">
-						<label>address</label> 
-						<input class="form-control" name='address'>
+						<label>address</label> <input class="form-control"
+							placeholder="Address" name='address'>
 					</div>
 					<div class='pull-right'>
-						<button type="submit" class="btn btn-default">Submit Button</button>
+						<button type="submit" class="btn btn-default">Submit
+							Button</button>
 						<button type="reset" class="btn btn-default">Reset Button</button>
 					</div>
 				</form>

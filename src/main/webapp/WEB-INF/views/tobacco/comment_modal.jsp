@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -11,20 +13,27 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label>Commenter</label> <input class="form-control" name='email'
-						value='New Reply!!'>
+					<label>Commenter</label>
+					<sec:authorize access="isAnonymous()">
+						<input class="form-control" name='email' value=''
+							readonly="readonly">
+					</sec:authorize>
+					<sec:authorize access="!isAnonymous()">
+						<input class="form-control" name='email' value='<sec:authentication property="principal.username"/>'
+						readonly="readonly">
+					</sec:authorize>
 				</div>
 				<div class="form-group">
 					<label>Content</label> <input class="form-control" name='content'
 						value='replyer'>
 				</div>
 				<div class="form-group">
-					<label>Comment Date</label> <input class="form-control" name='cdate'
-						value=''>
+					<label>Comment Date</label> <input class="form-control"
+						name='cdate' value=''>
 				</div>
 			</div>
 			<div class="modal-footer">
-			
+
 				<button id='modalModBtn' type="button" class="btn btn-warning">Modify</button>
 				<button id='modalRemoveBtn' type="button" class="btn btn-danger">Remove</button>
 				<button id='modalRegisterBtn' type="button" class="btn btn-primary">Register</button>

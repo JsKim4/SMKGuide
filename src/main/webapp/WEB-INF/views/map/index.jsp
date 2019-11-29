@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8" buffer="128kb"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <%@include file="../includes/header.jsp"%>
 <div class="row">
 	<div class="col-lg-12">
@@ -14,8 +16,11 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				Smoke Area
-				<button id="regBtn" type="button" class="btn btn-xs pull-right">
+				<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_MANAGE')">
+					<button id="regBtn" type="button" class="btn btn-xs pull-right">
 					Register New Area</button>
+				</sec:authorize>
+				
 			</div>
 			<!-- end panel-heading -->
 			<div class="panel-body">

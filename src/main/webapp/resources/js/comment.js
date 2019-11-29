@@ -76,10 +76,11 @@ var commentService =(function(){
 		})
 	}
 	
-	function remove(commentId,callback,error){
+	function remove(comment,callback,error){
 		$.ajax({
 			type:'delete',
-			url:'/comment/'+commentId,
+			url:'/comment/'+comment.commentId,
+			data : JSON.stringify(comment),
 			contentType : "application/json; charset=utf-8",
 			success : function(result,status,xhr){
 				if(callback){

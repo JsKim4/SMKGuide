@@ -7,11 +7,31 @@
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<bean id="accessDenied"
+		class="org.kjs.security.AccessDeniedHandler"></bean>
+	<bean id="loginSuccess"
+		class="org.kjs.security.LoginSuccessHandler"></bean>
+	<bean id="passwordEncoder"
+		class="org.kjs.security.CustomPasswordEncoder"></bean>
+	<bean id="userDetailService"
+		class="org.kjs.security.CustomUserDetailService"></bean>
+
+
+
+
 	<security:http>
-		<security:intercept-url pattern="/**" access="permitAll"/>
-		<security:form-login />
+		<security:form-login login-page="/member/loginForm"
+			login-processing-url="/member/login"
+			authentication-success-handler-ref="loginSuccess" />
+		<security:logout logout-url="/member/logout"
+			invalidate-session="true" 
+			logout-success-url="/"/>
 	</security:http>
 	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="userDetailService">
+			<security:password-encoder
+				ref="passwordEncoder" />
+		</security:authentication-provider>
 	</security:authentication-manager>
 
 </beans>

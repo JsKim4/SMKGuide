@@ -10,18 +10,18 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberVO {		//»ç¿ëÁö
-	private Long memberId;			//»ç¿ëÀÚ °íÀ¯¹øÈ£
-	private String email;			//»ç¿ëÀÚ ÀÌ¸ÞÀÏ
-	private String password;		//»ç¿ëÀÚ ºñ¹Ð¹øÈ£
-	private String confirmPassword;	//È®ÀÎ È¤Àº º¯°æ¿ë ºñ¹Ð¹øÈ£
-	private String memberName;		//»ç¿ëÀÚ ÀÌ¸§
-	private String token;			//ÅäÅ«
-	private Boolean deleteFlag;		//»èÁ¦¿©ºÎ
-	private Long permission;		//±ÇÇÑ ·¹º§
-	private String telephone;		//ÀüÈ­¹øÈ£
-	private String address;			//ÁÖ¼Ò
-	private Date joindate;			//°¡ÀÔÀÏ
-	private Date updatedate;		//¼öÁ¤ÀÏ
+public class MemberVO {		//ï¿½ï¿½ï¿½ï¿½ï¿½
+	private Long memberId;			//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£
+	private String email;			//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½
+	private String password;		//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£
+	private String confirmPassword;	//È®ï¿½ï¿½ È¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£
+	private String memberName;		//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+	private String token;			//ï¿½ï¿½Å«
+	private Boolean deleteFlag;		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private Long permission;		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	private String telephone;		//ï¿½ï¿½È­ï¿½ï¿½È£
+	private String address;			//ï¿½Ö¼ï¿½
+	private Date joindate;			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private Date updatedate;		//ï¿½ï¿½ï¿½ï¿½ï¿½
 	private List<AuthVO> authList;
 }

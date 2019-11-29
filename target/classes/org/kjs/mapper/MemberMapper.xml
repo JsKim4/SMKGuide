@@ -5,27 +5,31 @@
 <mapper namespace="org.kjs.mapper.MemberMapper">
 
 	<resultMap type="org.kjs.domain.MemberVO" id="memberMap">
-		<id property="memberId" column="member_id"/>
-		<result property="memberId" column="member_id"/>
-		<result property="memberName" column="member_name"/>
-		<result property="email" column="email"/>
-		<result property="password" column="password"/>
-		<result property="telephone" column="telephone"/>
-		<result property="address" column="address"/>
-		<result property="joindate" column="joindate"/>
-		<result property="updatedate" column="updatedate"/>
-		<collection property="authList" resultMap="authMap"/>
+		<id property="memberId" column="member_id" />
+		<result property="memberId" column="member_id" />
+		<result property="memberName" column="member_name" />
+		<result property="email" column="email" />
+		<result property="password" column="password" />
+		<result property="telephone" column="telephone" />
+		<result property="address" column="address" />
+		<result property="joindate" column="joindate" />
+		<result property="updatedate" column="updatedate" />
+		<collection property="authList" resultMap="authMap" />
 	</resultMap>
 	<resultMap type="org.kjs.domain.AuthVO" id="authMap">
-		<result property="memberId" column="member_id"/>
-		<result property="auth" column="auth"/>
+		<result property="memberId" column="member_id" />
+		<result property="auth" column="auth" />
 	</resultMap>
-	
-	
+
+
 	<insert id="insert">
+		<selectKey resultType="long" keyProperty="memberId"
+			order="AFTER">
+			SELECT MAX(member_id) FROM tbl_member;
+		</selectKey>
 		insert into
-		tbl_member(email,password,member_name,telephone,address)
-		values(#{email},#{password},#{memberName},#{telephone},#{address})
+		tbl_member(email,password,member_name,telephone,address,token)
+		values(#{email},#{password},#{memberName},#{telephone},#{address},#{token})
 	</insert>
 	<update id="update">
 		update tbl_member set
@@ -37,8 +41,11 @@
 		(email,password,member_id) = (#{email},#{password},#{memberId})
 	</update>
 	<select id="get" resultMap="memberMap">
-		select m.member_id, member_name, email, password, telephone, address, joindate, updatedate auth
-		from tbl_member m left outer join tbl_auth auth on m.member_id = auth.member_id where
+		select m.member_id, member_name,
+		email, password, telephone, address, joindate, updatedate, a.auth
+		from
+		tbl_member m left outer join tbl_auth a on m.member_id =
+		a.member_id where
 		(email)=(#{email})
 	</select>
 	<select id="getIdByEmail" resultType="int">

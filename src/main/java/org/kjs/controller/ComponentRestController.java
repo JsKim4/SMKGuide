@@ -5,6 +5,7 @@ import org.kjs.service.ComponentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,28 +23,29 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @AllArgsConstructor
 public class ComponentRestController {
-	//Component Service·Î Ã³¸®
+	//Component Serviceï¿½ï¿½ Ã³ï¿½ï¿½
 	private ComponentService service;
 	
-	/* ±âº»°ñÀÚ
-	 * url·Î µé¾î¿À´Â type¿¡ µû¶ó tableÀ» º¯°æ ÇÏ¸ç insert ½ÇÇà
-	 * component·Î ¹­ÀÎ table ÀÇ ±¸¼º¿ä¼Ò´Â id,name¸¸ Á¸ÀçÇÏ¸ç
-	 * type,brand,country,company°¡ ÀÌ¿¡ ¼ÓÇÔ
+	/* ï¿½âº»ï¿½ï¿½ï¿½ï¿½
+	 * urlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ typeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ tableï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¸ï¿½ insert ï¿½ï¿½ï¿½ï¿½
+	 * componentï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ table ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½ id,nameï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½
+	 * type,brand,country,companyï¿½ï¿½ ï¿½Ì¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 * */
 	
 	
 	
 	/*
-	 * create ¿Í modify´Â
-	 * requestBody·Î vo¸¦ ¹Þ°Ô µÇ´Âµ¥ vo¾È¿¡ ÀÖ´Â name field ¸¸ »ç¿ëÇÔ
+	 * create ï¿½ï¿½ modifyï¿½ï¿½
+	 * requestBodyï¿½ï¿½ voï¿½ï¿½ ï¿½Þ°ï¿½ ï¿½Ç´Âµï¿½ voï¿½È¿ï¿½ ï¿½Ö´ï¿½ name field ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * */
+	@Secured({"ROLE_ADMIN","ROLE_MANAGE"})
 	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> create(@RequestBody ComponentVO vo) {
 		log.info(vo.toString());
 		return service.register(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping(value = "/{id}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> modify(@RequestBody ComponentVO vo,
 			@PathVariable("id") Long id) {
@@ -53,17 +55,16 @@ public class ComponentRestController {
 	}
 	
 	/*
-	 * get °ú  removeÀÇ °æ¿ì urlÀ» ÅëÇØ type°ú id ¸¸ ¹Þ¾Æ Ã³¸®ÇÔ
-	 * url·Î type °ú page¸¦ ¹ÞÀ½
+	 * get ï¿½ï¿½  removeï¿½ï¿½ ï¿½ï¿½ï¿½ urlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ typeï¿½ï¿½ id ï¿½ï¿½ ï¿½Þ¾ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½
+	 * urlï¿½ï¿½ type ï¿½ï¿½ pageï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 * */
-	
 	@GetMapping(value = "/{type}/{id}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<ComponentVO> get(@PathVariable("type") String type, @PathVariable("id") Long id) {
 		ComponentVO vo = new ComponentVO(id, "", type);
 		return new ResponseEntity<>(service.get(vo), HttpStatus.OK);
 	}
-
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping(value = "/{type}/{id}", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> remove(@PathVariable("type") String type, @PathVariable("id") Long id) {
 		ComponentVO vo = new ComponentVO(id, "", type);

@@ -20,20 +20,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @AllArgsConstructor
 public class ComponentController {
-	//Component Service·Î Ã³¸®
+	//Component Serviceï¿½ï¿½ Ã³ï¿½ï¿½
 	private ComponentService service;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	/* ±âº»°ñÀÚ
-	 * url·Î µé¾î¿À´Â type¿¡ µû¶ó tableÀ» º¯°æ ÇÏ¸ç insert ½ÇÇà
-	 * component·Î ¹­ÀÎ table ÀÇ ±¸¼º¿ä¼Ò´Â id,name¸¸ Á¸ÀçÇÏ¸ç
-	 * type,brand,country,company°¡ ÀÌ¿¡ ¼ÓÇÔ
+	/* ï¿½âº»ï¿½ï¿½ï¿½ï¿½
+	 * urlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ typeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ tableï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¸ï¿½ insert ï¿½ï¿½ï¿½ï¿½
+	 * componentï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ table ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½ id,nameï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½
+	 * type,brand,country,companyï¿½ï¿½ ï¿½Ì¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 * */
 	
 	
 	
 	/*
-	 * create ¿Í modify´Â
-	 * requestBody·Î vo¸¦ ¹Þ°Ô µÇ´Âµ¥ vo¾È¿¡ ÀÖ´Â name field ¸¸ »ç¿ëÇÔ
+	 * create ï¿½ï¿½ modifyï¿½ï¿½
+	 * requestBodyï¿½ï¿½ voï¿½ï¿½ ï¿½Þ°ï¿½ ï¿½Ç´Âµï¿½ voï¿½È¿ï¿½ ï¿½Ö´ï¿½ name field ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * */
 	
 	/*@PostMapping("/{type}/register")
@@ -74,7 +74,7 @@ public class ComponentController {
 	
 	
 	/*
-	 * url·Î type °ú page¸¦ ¹ÞÀ½
+	 * urlï¿½ï¿½ type ï¿½ï¿½ pageï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 * 
 	@GetMapping(value = "pages/{type}/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -86,8 +86,8 @@ public class ComponentController {
 
 	
 	/*
-	 * get °ú  removeÀÇ °æ¿ì urlÀ» ÅëÇØ type°ú id ¸¸ ¹Þ¾Æ Ã³¸®ÇÔ
-	 * url·Î type °ú page¸¦ ¹ÞÀ½
+	 * get ï¿½ï¿½  removeï¿½ï¿½ ï¿½ï¿½ï¿½ urlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ typeï¿½ï¿½ id ï¿½ï¿½ ï¿½Þ¾ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½
+	 * urlï¿½ï¿½ type ï¿½ï¿½ pageï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 * 
 	
 	@GetMapping(value = "/{type}/{id}", produces = { MediaType.APPLICATION_XML_VALUE,

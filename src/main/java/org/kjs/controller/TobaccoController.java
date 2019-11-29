@@ -7,6 +7,9 @@ import org.kjs.domain.TobaccoVO;
 import org.kjs.service.AttachService;
 import org.kjs.service.ComponentService;
 import org.kjs.service.TobaccoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +29,7 @@ public class TobaccoController {
 	TobaccoService service;
 	AttachService attachService;
 	ComponentService CS;
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	public void RM(Model model) {
 		model.addAttribute("brandList", CS.getRegistList(new ComponentVO("brand")));
@@ -42,7 +46,7 @@ public class TobaccoController {
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
-
+	@Secured({"ROLE_ADMIN","ROLE_MANAGE"})
 	@PostMapping("/register")
 	public String register(TobaccoVO vo, MultipartFile uploadFile,RedirectAttributes rttr) {
 		vo.setTobaccoName(vo.getTobaccoName().trim());
@@ -60,22 +64,23 @@ public class TobaccoController {
 		}
 		return "redirect:/tobacco/list";	
 	}
-
+	@Secured({"ROLE_ADMIN","ROLE_MANAGE"})
 	@GetMapping("/register")
 	public void register(Model model) {
 		RM(model);
 	}
-
-	@GetMapping({ "/get", "/modify" })
-	public void get(@RequestParam("tobaccoId") Long tobaccoId, @ModelAttribute("cri") Criteria cri, Model model) {
+	@GetMapping("/get")
+	public String get(@RequestParam("tobaccoId") Long tobaccoId, @ModelAttribute("cri") Criteria cri, Model model) {
 		RM(model);
+		logger.info("get");
 		try {
 			model.addAttribute("tobacco", service.get(tobaccoId));
 		} catch (Exception e) {
 			model.addAttribute("result", "fail");
 		}
+		return "tobacco/get";
 	}
-
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/modify")
 	public String modify(TobaccoVO vo, @ModelAttribute("cri") Criteria cri,MultipartFile uploadFile, RedirectAttributes rttr) {
 		if (service.modify(vo)) {
@@ -86,7 +91,7 @@ public class TobaccoController {
 		}
 		return "redirect:/tobacco/list" + cri.getListLinkTobacco();
 	}
-
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/remove")
 	public String remove(@RequestParam("tobaccoId") Long tobaccoId, @ModelAttribute("cri") Criteria cri,
 			RedirectAttributes rttr) {
