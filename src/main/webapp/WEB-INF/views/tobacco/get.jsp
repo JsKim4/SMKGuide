@@ -80,7 +80,7 @@
 				<div class="col-sm-1">
 					<button data-oper='list' class="btn btn-info">List</button>
 				</div>
-				<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_MANAGE')">
+				<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_MANAGE','ROLE_USER')">
 					<div class="col-sm-2">
 						<select class="form-control" id="grade">
 					      <option value='5'>5</option>
