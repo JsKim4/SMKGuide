@@ -26,7 +26,12 @@
 				<table class="table table-striped table-bordered table hover">
 					<thead>
 						<tr>
-							<th>#번호</th>
+							<sec:authorize access="!isAnonymous()">
+								<th colspan="2">#번호</th>
+							</sec:authorize>
+							<sec:authorize access="isAnonymous()">
+								<th>#번호</th>
+							</sec:authorize>
 							<th>Img</th>
 							<th>담배명</th>
 							<th>브랜드명</th>
@@ -41,6 +46,13 @@
 								href='<c:out value="${tobacco.tobaccoId}"/>'> <c:out
 										value="${tobacco.tobaccoId}" />
 							</a></td>
+							<sec:authorize access="!isAnonymous()">
+								<td>
+									<a class='log' href='<c:out value="${tobacco.tobaccoId}"/>'> 
+											<img src="<%=request.getContextPath()%>/resources/logBtn.png" height="30" width="30" />
+									</a> 
+								</td>
+							</sec:authorize>
 							<td><img style="width: 50px; height: 50px"
 								src='/display?fileName=${tobacco.attach.thumbnailFileName}'></td>
 							<td><c:out value="${tobacco.tobaccoName }" /> <b>[ <c:out
@@ -130,6 +142,8 @@
 </div>
 <!-- /.row -->
 <%@include file="../includes/footer.jsp"%>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/smokelog.js?ver=143"></script>
 <script type="text/javascript">
 	$(document)
 			.ready(
@@ -138,6 +152,11 @@
 						checkModal(result);
 						//checkModal 1회 시행후  history의 state 상태를 null 처리하여 뒤로가기 시에도 modal 시행 안되게 변경
 						history.replaceState({}, null, null);
+						var csrfHeaderName = "${_csrf.headerName}";
+						var csrfTokenValue = "${_csrf.token}"
+						$(document).ajaxSend(function(e, xhr, options) {
+							xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+						});
 						function checkModal(result) {
 							if (result === '' || history.state) {
 								return;
@@ -170,21 +189,24 @@
 									actionForm.submit();
 
 								});
-						var csrfHeaderName = "${_csrf.headerName}";
-						var csrfTokenValue = "${_csrf.token}"
-						$(".move")
-								.on(
-										"click",
-										function(e) {
-											e.preventDefault();
-											actionForm
-													.append("<input type='hidden' name='tobaccoId' value='"
-															+ $(this).attr(
-																	"href")
-															+ "'>");
-											actionForm.attr("action", "./get");
-											actionForm.submit();
-										});
+						$(".log").on("click", function(e) {
+							e.preventDefault();
+							smokelogService.add($(this).attr("href"),function(result){
+								alert("흡연 로그가 추가되었습니다.");
+								
+							});
+						});
+						$(".move").on("click",
+							function(e) {
+								e.preventDefault();
+								actionForm
+								.append("<input type='hidden' name='tobaccoId' value='"
+										+ $(this).attr(
+												"href")
+										+ "'>");
+								actionForm.attr("action", "./get");
+								actionForm.submit();
+						});
 
 						var searchForm = $('#searchForm');
 						$("#searchForm button").on("click", function(e) {

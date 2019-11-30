@@ -72,7 +72,7 @@ public class TobaccoController {
 	@GetMapping("/get")
 	public String get(@RequestParam("tobaccoId") Long tobaccoId, @ModelAttribute("cri") Criteria cri, Model model) {
 		RM(model);
-		logger.info("get");
+		logger.info(service.get(tobaccoId)+"");
 		try {
 			model.addAttribute("tobacco", service.get(tobaccoId));
 		} catch (Exception e) {

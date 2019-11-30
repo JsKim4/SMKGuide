@@ -2,6 +2,8 @@ package org.kjs.controller;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class HomeController {
-	
+
+	private static final String X_CSRF_TOKEN = "X-CSRF-TOKEN";
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
@@ -30,16 +33,11 @@ public class HomeController {
 	public String mapDefault() {
 		return "map/index";
 	}
-	
-	
-	
-	@GetMapping("/customLogin")
-	public void loginInput(String error,String logout,Model model) {
-		if(error!=null)
-			model.addAttribute("error","Login Error Check Your Acount");
-		
-		if(logout!=null)
-			model.addAttribute("logout", "LogOut!!");
+	@GetMapping("/testPage")
+	public void get(HttpServletRequest  request) throws Exception {
+		//http.csrf().disable().addFilterBefore(new StatelessCSRFFilter(), CsrfFilter.class);
+		final String csrfTokenValue = request.getHeader(X_CSRF_TOKEN);
+		logger.info(csrfTokenValue);
 	}
 	
 }

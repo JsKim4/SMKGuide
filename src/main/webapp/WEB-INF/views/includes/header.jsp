@@ -55,6 +55,7 @@
 								value="${_csrf.token}" />
 						</form>
 					</li>
+					<li><a href="/member/mypage">My Page</a></li>
 				</sec:authorize>
 
 				<sec:authorize access="isAnonymous()">

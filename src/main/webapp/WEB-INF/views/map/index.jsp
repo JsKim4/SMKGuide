@@ -41,7 +41,10 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/area.js?ver=11"></script>
 <script>
 $(document).ready(function() {
-	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}"
+	$(document).ajaxSend(
+			function(e, xhr, options) {xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);});
 		var modal = $(".modal");  
 		var modalRemoveBtn = $("#modalRemoveBtn"); 
 		var modalRegisterBtn = $("#modalRegisterBtn"); 
