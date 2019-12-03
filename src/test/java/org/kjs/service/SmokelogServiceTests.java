@@ -3,6 +3,8 @@ package org.kjs.service;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kjs.domain.Criteria;
+import org.kjs.domain.MemberVO;
+import org.kjs.domain.SearchDateBySmokelog;
 import org.kjs.domain.SmokelogVO;
 import org.kjs.domain.TobaccoVO;
 import org.kjs.mapper.SmokelogMapper;
@@ -59,4 +61,14 @@ public class SmokelogServiceTests {
 		cri.setMId(3L);
 		log.info(service.getTotalCount(cri));
 	}
+	
+	@Test
+	public void testGetListByDate() {
+		MemberVO member = new MemberVO();
+		member.setMemberId(1L);
+		SearchDateBySmokelog searchDate = new SearchDateBySmokelog("%Y-%m","2019-01-01","2019-12-01");
+		log.info(service.getListByDate(searchDate, member));
+	}
+	
+	
 }

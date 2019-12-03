@@ -3,6 +3,9 @@ package org.kjs.service;
 import java.util.List;
 
 import org.kjs.domain.Criteria;
+import org.kjs.domain.DateBySmokelog;
+import org.kjs.domain.MemberVO;
+import org.kjs.domain.SearchDateBySmokelog;
 import org.kjs.domain.SmokelogVO;
 
 public interface SmokelogService {
@@ -18,6 +21,6 @@ public interface SmokelogService {
 	
 	public int getTotalCount(Criteria cri);
 	
-
+	public List<DateBySmokelog> getListByDate(SearchDateBySmokelog searchDate,MemberVO member);
 
 }

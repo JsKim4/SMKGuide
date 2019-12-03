@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kjs.domain.Criteria;
 import org.kjs.domain.MemberVO;
+import org.kjs.domain.SearchDateBySmokelog;
 import org.kjs.domain.SmokelogVO;
 import org.kjs.domain.TobaccoVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +78,13 @@ public class SmokelogMapperTests {
 		cri.setMId(1L);
 		cri.setTId(3L);
 		log.info(mapper.getTotalCount(cri));
+	}
+	
+	@Test
+	public void testGetCountSmokelogByDate() {
+		MemberVO member = new MemberVO();
+		member.setMemberId(1L);
+		SearchDateBySmokelog searchDate = new SearchDateBySmokelog("%Y-%m","2019-01-01","2019-12-01");
+		log.info(mapper.getCountSmokelogByDate(searchDate, member));
 	}
 }

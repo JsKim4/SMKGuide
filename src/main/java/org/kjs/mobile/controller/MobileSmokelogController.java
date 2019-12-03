@@ -1,9 +1,13 @@
 package org.kjs.mobile.controller;
 
+import java.util.List;
+
 import org.kjs.controller.HomeController;
 import org.kjs.domain.Criteria;
+import org.kjs.domain.DateBySmokelog;
 import org.kjs.domain.MemberVO;
 import org.kjs.domain.PageDTO;
+import org.kjs.domain.SearchDateBySmokelog;
 import org.kjs.domain.SmokelogPageDTO;
 import org.kjs.domain.SmokelogVO;
 import org.kjs.service.MobileService;
@@ -70,5 +74,14 @@ public class MobileSmokelogController {
 		return service.remove(id) ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
+	
+	@PostMapping(value = "list/{dateFormat}/{startDate}/{endDate}", consumes = "application/json", produces = { MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<List<DateBySmokelog>> getListByDate(@RequestBody MemberVO member,@PathVariable("dateFormat") String dateFormat,
+			@PathVariable("startDate")String startDate,@PathVariable("endDate")String endDate) {
+		member = mService.getMemberByToken(member.getToken());
+		SearchDateBySmokelog searchDate = new SearchDateBySmokelog(dateFormat, startDate, endDate);
+		return new ResponseEntity<>(service.getListByDate(searchDate, member), HttpStatus.OK);
+	}
+	
 }

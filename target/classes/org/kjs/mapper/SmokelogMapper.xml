@@ -109,4 +109,12 @@
 		 <include refid="criteria"></include> 
 		l.smokelog_id>0 
 	</select>
+	
+	<select id="getCountSmokelogByDate" resultType="org.kjs.domain.DateBySmokelog">
+		select date_format(cdate, #{searchDate.dateFormat}) `date`, count(*) cnt
+		from tbl_smokelog
+		where member_id=#{member.memberId}
+		and cdate between date(#{searchDate.startDate})
+		and date(#{searchDate.endDate}) group by `date`;
+	</select>
 </mapper>

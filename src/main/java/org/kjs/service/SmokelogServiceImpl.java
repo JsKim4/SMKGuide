@@ -3,6 +3,9 @@ package org.kjs.service;
 import java.util.List;
 
 import org.kjs.domain.Criteria;
+import org.kjs.domain.DateBySmokelog;
+import org.kjs.domain.MemberVO;
+import org.kjs.domain.SearchDateBySmokelog;
 import org.kjs.domain.SmokelogVO;
 import org.kjs.mapper.SmokelogMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,4 +55,11 @@ public class SmokelogServiceImpl implements SmokelogService {
 		return mapper.getTotalCount(cri);
 	}
 
+	@Override
+	public List<DateBySmokelog> getListByDate(SearchDateBySmokelog searchDate, MemberVO member) {
+		// TODO Auto-generated method stub
+		return mapper.getCountSmokelogByDate(searchDate, member);
+	}
+
+	
 }
