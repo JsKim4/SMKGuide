@@ -5,6 +5,7 @@ import java.util.List;
 import org.kjs.domain.CommentVO;
 import org.kjs.domain.ComponentVO;
 import org.kjs.domain.Criteria;
+import org.kjs.domain.MemberVO;
 import org.kjs.domain.SmokeAreaVO;
 import org.kjs.domain.TobaccoVO;
 import org.kjs.mapper.MobileMapper;
@@ -46,6 +47,18 @@ public class MobileServiceImpl implements MobileService {
 	public int getCommentTotalCount(Criteria cri) {
 		// TODO Auto-generated method stub
 		return mapper.getCommentTotalCount(cri);
+	}
+
+	@Override
+	public MemberVO getMemberByToken(String token) {
+		// TODO Auto-generated method stub
+		return mapper.getMemberByToken(token);
+	}
+
+	@Override
+	public String getToken(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.getToken(vo);
 	}
 	
 	

@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kjs.domain.Criteria;
 import org.kjs.domain.GradeVO;
+import org.kjs.domain.MemberVO;
+import org.kjs.domain.TobaccoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -30,8 +32,9 @@ public class GradeServiceTests {
 	@Test
 	public void testGetList() {
 		Criteria cri = new Criteria(1,10);
-		cri.setType("TM");
-		cri.setTId(2L);
+		cri.setType("M");
+		cri.setMId(74L);
+		log.info(service.getListWithPage(cri).toString());
 	}
 
 	@Test
@@ -48,9 +51,13 @@ public class GradeServiceTests {
 	@Test
 	public void testRegister() {
 		GradeVO vo = new GradeVO();
-		vo.setMemberId(74L);
-		vo.setTobaccoId(84L);
-		vo.setScore(2L);
+		MemberVO member = new MemberVO();
+		TobaccoVO tobacco = new TobaccoVO();
+		tobacco.setTobaccoId(84L);
+		member.setMemberId(74L);
+		vo.setTobacco(tobacco);
+		vo.setMember(member);
+		vo.setScore(5L);
 		service.register(vo);
 	}
 

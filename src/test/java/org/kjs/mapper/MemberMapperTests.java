@@ -1,5 +1,9 @@
 package org.kjs.mapper;
 
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.Base64.Encoder;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kjs.domain.Criteria;
@@ -17,10 +21,37 @@ import lombok.extern.log4j.Log4j;
 public class MemberMapperTests {
 	@Setter(onMethod_ = @Autowired)
 	private MemberMapper mapper;
-
+	
+	@Setter(onMethod_ = @Autowired)
+	private MobileMapper mmapper;
+	
+	@Test
+	public void testGetByToken() {
+		log.info(mmapper.getMemberByToken("0�6L�+�&��?������L��Ah)98�Ϩ)�"));
+	}
+	
+	
 	@Test
 	public void testGetIdByEmail() {
 		log.info(mapper.getIdByEmail("email"));
+	}
+	public String generateToken() {
+	    SecureRandom random = new SecureRandom();
+	    byte bytes[] = new byte[40];
+	    random.nextBytes(bytes);
+	    Encoder encoder = Base64.getUrlEncoder().withoutPadding();
+	    String token = encoder.encodeToString(bytes);
+	    return token;
+	}
+	@Test
+	public void testUpdateToken() {
+		MemberVO vo = new MemberVO();
+		vo.setToken(generateToken());
+		log.info(vo.getToken());
+		vo.setMemberId(65l);
+		mapper.updateToken(vo);
+		
+		
 	}
 	
 	

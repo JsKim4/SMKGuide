@@ -1,5 +1,8 @@
 package org.kjs.service;
 
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 import java.util.List;
 
 import org.kjs.domain.AuthVO;
@@ -19,10 +22,21 @@ public class MemberServiceImpl implements MemberService {
 	MemberMapper mapper;
 	@Setter(onMethod_= {@Autowired})
 	AuthMapper authMapper;
+	
+	public String generateToken() {
+	    SecureRandom random = new SecureRandom();
+	    byte bytes[] = new byte[40];
+	    random.nextBytes(bytes);
+	    Encoder encoder = Base64.getUrlEncoder().withoutPadding();
+	    String token = encoder.encodeToString(bytes);
+	    return token;
+	}
+	
 	@Override
 	@Transactional
 	public int join(MemberVO vo) {
 		// TODO Auto-generated method stub
+		vo.setToken(generateToken());
 		mapper.insert(vo);
 		authMapper.insert(new AuthVO(vo.getMemberId(),"ROLE_USER"));
 		return 1;

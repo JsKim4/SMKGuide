@@ -3,6 +3,7 @@ package org.kjs.mapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kjs.domain.Criteria;
+import org.kjs.domain.MemberVO;
 import org.kjs.domain.SmokelogVO;
 import org.kjs.domain.TobaccoVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,9 @@ public class SmokelogMapperTests {
 	@Test
 	public void testInsert() {
 		SmokelogVO vo = new SmokelogVO();
-		vo.setMemberId(1L);
+		MemberVO member = new MemberVO();
+		member.setMemberId(1L);
+		vo.setMember(member);
 		TobaccoVO tobacco = new TobaccoVO();
 		tobacco.setTobaccoId(2L);
 		vo.setTobacco(tobacco);
@@ -37,7 +40,9 @@ public class SmokelogMapperTests {
 	@Test
 	public void testInsertSelectKey() {
 		SmokelogVO vo = new SmokelogVO();
-		vo.setMemberId(1L);
+		MemberVO member = new MemberVO();
+		member.setMemberId(1L);
+		vo.setMember(member);
 		TobaccoVO tobacco = new TobaccoVO();
 		tobacco.setTobaccoId(3L);
 		vo.setTobacco(tobacco);
@@ -60,7 +65,6 @@ public class SmokelogMapperTests {
 		Criteria cri = new Criteria(1,20);
 		cri.setStartIndex();
 		cri.setType("T");
-		cri.setMId(1L);
 		cri.setTId(2L);
 		mapper.getListWithPage(cri).forEach(vo->log.info(vo));
 	}

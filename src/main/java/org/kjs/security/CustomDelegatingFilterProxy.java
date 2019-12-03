@@ -18,7 +18,7 @@ public class CustomDelegatingFilterProxy extends DelegatingFilterProxy {
 		// TODO Auto-generated method stub
 		HttpServletRequest req = (HttpServletRequest)request;
 		String uri = req.getRequestURI();
-		if(uri.contains("mobile")) {
+		if(uri.contains("mobile")||uri.contains("info")) {
 			filterChain.doFilter(request, response);
 		}
 		else

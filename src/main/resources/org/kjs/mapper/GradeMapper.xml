@@ -23,25 +23,29 @@
 		</trim>
 	</sql>
 	<resultMap id="grade" type="org.kjs.domain.GradeVO">
-		<id property="tobaccoId" column="tobacco_id" />
-		<id property="tobaccoName" column="tobacco_name" />
-	   	<id property="memberId" column="member_id" />
-	   	<id property="email" column="email" />
-	   	<id property="score" column="score" />
+	 	<result property='score' column='score'/>
+	   	<association property="tobacco"  javaType="org.kjs.domain.TobaccoVO" >
+	    	<result property="tobaccoId"  column="tobacco_id" />
+			<result property="tobaccoName"  column="tobacco_name" />
+		</association>
+		<association property="member"  javaType="org.kjs.domain.MemberVO" >
+	    	<result property="memberId"  column="member_id" />
+			<result property="email"  column="email" />
+		</association>
 	</resultMap>
 	<insert id="insert">
 		insert into
 		tbl_grade(tobacco_id,member_id,score)
-		values(#{tobaccoId},#{memberId},#{score})
+		values(#{tobacco.tobaccoId},#{member.memberId},#{score})
 	</insert>
 	
 	<update id="update">
 		update tbl_grade set score = #{score}
-		where (tobacco_id,member_id) = (#{tobaccoId},#{memberId})
+		where (tobacco_id,member_id) = (#{tobacco.tobaccoId},#{member.memberId})
 	</update>
 	<update id="updateGradeTobacco">
 		update tbl_tobacco set grade_sum = #{vo.score}+grade_sum, grade_num = grade_num + #{insert}
-		where tobacco_id = #{vo.tobaccoId}
+		where tobacco_id = #{vo.tobacco.tobaccoId}
 	</update>
 	<select id="get" resultMap="grade">
 		select 
@@ -53,22 +57,24 @@
 		from tbl_grade as g
 		left join tbl_tobacco as t on (g.tobacco_id = t.tobacco_id)
 		left join tbl_member as m on (g.member_id = m.member_id)
-		where (g.tobacco_id,g.member_id) = (#{tobaccoId},#{memberId})
+		where (g.tobacco_id,g.member_id) = (#{tobacco.tobaccoId},#{member.memberId})
 	</select>
 	
 	
-	<select id="getListWithPage" resultMap="grade">
+	<select id="getListWithPage" resultType="org.kjs.domain.GradeVO">
 		select
-		g.member_id,
-		g.tobacco_id,
-		t.tobacco_name,
-		m.email,
-		g.score
+		g.member_id 'member.memberId',
+		g.tobacco_id 'tobacco.tobaccoId',
+		t.tobacco_name 'tobacco.tobaccoName',
+		m.email 'member.email',
+		g.score score
 		from tbl_grade as g
 		left join tbl_tobacco as t on (g.tobacco_id = t.tobacco_id)
 		left join tbl_member as m on (g.member_id = m.member_id)
 		where <include refid="criteria"></include> 
-		g.score > -1  limit #{startIndex},#{amount}
+		g.score > -1
+		order by g.tobacco_id desc
+		limit #{startIndex},#{amount}
 	</select>
 	
 	<select id="getTotalCount" resultType="int">

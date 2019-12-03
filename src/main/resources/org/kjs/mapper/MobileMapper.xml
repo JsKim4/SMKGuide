@@ -23,7 +23,22 @@
 		</trim>
 	</sql>
 
-
+	<resultMap type="org.kjs.domain.MemberVO" id="memberMap">
+		<id property="memberId" column="member_id" />
+		<result property="memberId" column="member_id" />
+		<result property="memberName" column="member_name" />
+		<result property="email" column="email" />
+		<result property="password" column="password" />
+		<result property="telephone" column="telephone" />
+		<result property="address" column="address" />
+		<result property="joindate" column="joindate" />
+		<result property="updatedate" column="updatedate" />
+		<collection property="authList" resultMap="authMap" />
+	</resultMap>
+	<resultMap type="org.kjs.domain.AuthVO" id="authMap">
+		<result property="memberId" column="member_id" />
+		<result property="auth" column="auth" />
+	</resultMap>
 
 	<resultMap id="Tobacco" type="org.kjs.domain.TobaccoVO">
 		<id property="tobaccoId" column="tobacco_id" />
@@ -34,6 +49,8 @@
 		<id property="quantity" column="amount" />
 		<id property="price" column="price" />
 		<id property="commentCnt" column="comment_cnt" />
+	   	<id property="gradeSum" column="grade_sum" />
+	   	<id property="gradeNum" column="grade_num" />
 		<association property="country"
 			javaType="org.kjs.domain.ComponentVO">
 			<result property="id" column="country_id" />
@@ -98,7 +115,9 @@
 		t.comment_cnt,
 		a.uuid as uuid,
 		a.upload_path as upload_path,
-		a.file_name as file_name
+		a.file_name as file_name,
+		t.grade_num,
+		t.grade_sum		
 
 		from tbl_tobacco as t
 		left join tbl_country as ct on (t.country_id =
@@ -153,5 +172,22 @@
 		c.comment_id > 0
 	</select>
 
+
+	<select id="getMemberByToken" resultType="org.kjs.domain.MemberVO">
+		select member_id, member_name,
+		email, telephone, address
+		from
+		tbl_member
+		where
+		token=#{token}
+	</select>
+	
+	<select id="getToken" resultType="String">
+		select token
+		from
+		tbl_member
+		where
+		(email,password)=(#{email},#{password})
+	</select>
 
 </mapper>

@@ -321,7 +321,7 @@ $(document).ready(function() {
 					str += "<li class='left clearfix' data-commentid='"+list[i].commentId+"'>";
 					str += "	<div class='header'>";
 					str += "		<strong class='primary-font'>"
-							+ list[i].tobaccoName
+							+ list[i].tobacco.tobaccoName
 							+ "</strong>";
 					str += "	</div>";
 					str += "	<p>"

@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SmokelogVO {		//흡연로그
-	Long smokelogId;			//흡연로그 고유번호
-	TobaccoVO tobacco;			//흡연 담배
-	Long memberId;				//흡연 사용자
-	Date cdate;					//흡연일
+public class SmokelogVO {		
+	private Long smokelogId;			
+	private TobaccoVO tobacco;			
+	private MemberVO member;			
+	private Date cdate;					
 }

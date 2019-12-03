@@ -345,7 +345,9 @@ $(document).ready(function() {
 		var scoreValue = $("#grade").val();
 		var grade = {
 				score:scoreValue,
-				tobaccoId:tobaccoValue
+				tobacco:{
+					tobaccoId:tobaccoValue
+				}
 		}
 		console.log(grade);
 		gradeService.add(grade,function(result){

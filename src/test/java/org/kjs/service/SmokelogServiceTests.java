@@ -26,7 +26,6 @@ public class SmokelogServiceTests {
 	@Test
 	public void testInsert() {
 		SmokelogVO vo = new SmokelogVO();
-		vo.setMemberId(3L);
 		TobaccoVO tobacco = new TobaccoVO();
 		tobacco.setTobaccoId(14L);
 		vo.setTobacco(tobacco);

@@ -24,17 +24,20 @@
 	</sql>
 	<resultMap id="Smoke" type="org.kjs.domain.SmokelogVO">
 		<id property="smokelogId" column="smokelog_id" />
-	   	<id property="memberId" column="member_id" />
 	   	<id property="cdate" column="cdate" />
 	   	<association property="tobacco"  javaType="org.kjs.domain.TobaccoVO" >
 	    	<result property="tobaccoId"  column="tobacco_id" />
 			<result property="tobaccoName"  column="tobacco_name" />
 		</association>
+		<association property="member"  javaType="org.kjs.domain.MemberVO" >
+	    	<result property="memberId"  column="member_id" />
+			<result property="email"  column="email" />
+		</association>
 	</resultMap>
 	<insert id="insert">
 		insert into
 		tbl_smokelog(tobacco_id,member_id)
-		values(#{tobacco.tobaccoId},#{memberId})
+		values(#{tobacco.tobaccoId},#{member.memberId})
 	</insert>
 	
 	<insert id="insertSelectKey">
@@ -44,7 +47,7 @@
 		</selectKey>
 		insert into
 		tbl_smokelog(tobacco_id,member_id)
-		values(#{tobacco.tobaccoId},#{memberId})
+		values(#{tobacco.tobaccoId},#{member.memberId})
 	</insert>
 	
 	<update id="update">
@@ -58,9 +61,11 @@
 		l.tobacco_id,
 		s.tobacco_name,
 		l.member_id,
+		m.email,
 		l.cdate
 		from tbl_smokelog as l
 		left join tbl_tobacco as s on (l.tobacco_id = s.tobacco_id)
+		left join tbl_member as m on (l.member_id = m.member_id)
 		where smokelog_id = #{smokelogId}
 	</select>
 	
@@ -75,9 +80,12 @@
 		l.tobacco_id,
 		s.tobacco_name,
 		l.member_id,
+		m.email,
 		l.cdate
 		from tbl_smokelog as l
 		left join tbl_tobacco as s on (l.tobacco_id = s.tobacco_id)
+		left join tbl_member as m on (l.member_id = m.member_id)
+		where smokelog_id = #{smokelogId}
 	</select>
 	
 	<select id="getListWithPage" resultMap="Smoke">
@@ -86,9 +94,11 @@
 		l.tobacco_id,
 		s.tobacco_name,
 		l.member_id,
+		m.email,
 		l.cdate
 		from tbl_smokelog as l
 		left join tbl_tobacco as s on (l.tobacco_id = s.tobacco_id)
+		left join tbl_member as m on (l.member_id = m.member_id)
 		where <include refid="criteria"></include> 
 		l.smokelog_id>0 
 		order by l.smokelog_id desc limit #{startIndex},#{amount}

@@ -6,35 +6,37 @@ import org.kjs.domain.Criteria;
 import org.kjs.domain.MemberVO;
 
 public interface MemberMapper {
-	// È¸¿ø°¡ÀÔ
+	// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int insert(MemberVO vo);
 
-	// È¸¿ø Á¤º¸ ¼öÁ¤
+	// È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int update(MemberVO vo);
 	
-	// ·Î±×ÀÎ --> *ÀÌ¸ÞÀÏ + ºñ¹Ð¹øÈ£*
+	public int updateToken(MemberVO vo);
+	
+	// ï¿½Î±ï¿½ï¿½ï¿½ --> *ï¿½Ì¸ï¿½ï¿½ï¿½ + ï¿½ï¿½Ð¹ï¿½È£*
 	public MemberVO get(String email);
 	
 	//email to id
 	public Integer getIdByEmail(String email);
 	
-	// È¸¿ø Å»Åð *ÀÌ¸ÞÀÏ + ºñ¹Ð¹øÈ£*
+	// È¸ï¿½ï¿½ Å»ï¿½ï¿½ *ï¿½Ì¸ï¿½ï¿½ï¿½ + ï¿½ï¿½Ð¹ï¿½È£*
 	public int delete(MemberVO vo);
 
 
 	/*
 	 * 
-	 * °ü¸®ÀÚ ÆäÀÌÁö ¿ë
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	 * 
 	 *
 	 */
 
-	// ÀüÃ¼¸®½ºÆ®
+	// ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<MemberVO> getList();
 
-	// °Ë»ö¿ë + ÆäÀÌÁö
+	// ï¿½Ë»ï¿½ï¿½ï¿½ + ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public List<MemberVO> getListWithPage(Criteria cri);
 
-	// °Ë»ö¿ë
+	// ï¿½Ë»ï¿½ï¿½ï¿½
 	public int getTotalCount(Criteria cri);
 }

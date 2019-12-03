@@ -40,6 +40,13 @@
 		where
 		(email,password,member_id) = (#{email},#{password},#{memberId})
 	</update>
+	
+	<update id="updateToken">
+		update tbl_member set token = #{token}
+		where
+		(member_id) = (#{memberId})
+	</update>
+	
 	<select id="get" resultMap="memberMap">
 		select m.member_id, member_name,
 		email, password, telephone, address, joindate, updatedate, a.auth
@@ -48,6 +55,7 @@
 		a.member_id where
 		(email)=(#{email})
 	</select>
+	
 	<select id="getIdByEmail" resultType="int">
 		select member_id from
 		tbl_member where email=#{email}

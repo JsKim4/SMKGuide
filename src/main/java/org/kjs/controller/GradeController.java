@@ -39,7 +39,7 @@ public class GradeController {
 	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> create(@RequestBody GradeVO vo) {
 		CustomUser member= (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		vo.setMemberId(member.getVo().getMemberId());
+		vo.setMember(member.getVo());
 		return service.register(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}

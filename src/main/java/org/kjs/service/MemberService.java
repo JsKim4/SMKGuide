@@ -19,4 +19,5 @@ public interface MemberService {
 	public List<MemberVO> getList(Criteria cri);
 
 	public int getTotalCount(Criteria cri);
+	
 }

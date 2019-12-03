@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kjs.domain.Criteria;
 import org.kjs.domain.GradeVO;
+import org.kjs.domain.MemberVO;
+import org.kjs.domain.TobaccoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,16 +23,16 @@ public class GradeMapperTests {
 	@Test
 	public void testGetTotalCount() {
 		Criteria cri = new Criteria(1, 10);
-		cri.setType("T");
-		cri.setTId(84L);
-		mapper.getListWithPage(cri);
+		cri.setType("M");
+		cri.setTId(74L);
+		log.info(mapper.getListWithPage(cri));
 	}
 
 	@Test
 	public void testGetListWithPage() {
 		Criteria cri = new Criteria(1, 10);
-		cri.setType("T");
-		cri.setTId(84L);
+		cri.setType("M");
+		cri.setTId(74L);
 		mapper.getTotalCount(cri);
 	}
 
@@ -41,8 +43,13 @@ public class GradeMapperTests {
 	@Test
 	public void testInsert() {
 		GradeVO vo = new GradeVO();
-		vo.setMemberId(65L);
-		vo.setTobaccoId(84L);
+		MemberVO member = new MemberVO();
+		member.setMemberId(65L);
+		TobaccoVO tobacco = new TobaccoVO();
+		tobacco.setTobaccoId(84L);
+		member.setMemberId(65L);
+		vo.setMember(member);
+		vo.setTobacco(tobacco);
 		vo.setScore(1L);
 		GradeVO before = mapper.get(vo);
 		log.info("first Vo"+before);
